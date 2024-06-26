@@ -854,6 +854,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 			noteSpawnTime = FlxG.save.data.noteSpawnTime;
 		}
 		if (FlxG.save.data.resolution != null) {
+			#if desktop
 			resolution = FlxG.save.data.resolution;
     			var resolutionValue = cast(ClientPrefs.resolution, String);
 
@@ -872,6 +873,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
             				}
         			}
     			}
+			#end
 		}
 		if(FlxG.save.data.framerate != null) {
 			framerate = FlxG.save.data.framerate;
