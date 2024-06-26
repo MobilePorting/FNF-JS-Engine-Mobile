@@ -2,6 +2,8 @@
 import Paths;
 import haxe.ds.Vector as HaxeVector; //apparently denpa uses vectors, which is required for camera panning i guess
 
+import mobile.SUtil;
+
 #if sys
 import sys.*;
 import sys.io.*;

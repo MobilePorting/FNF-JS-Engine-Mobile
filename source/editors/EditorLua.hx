@@ -180,7 +180,7 @@ class EditorLua {
 			}
 		});
 
-		DiscordClient.addLuaCallbacks(lua);
+		#if DISCORD_ALLOWED DiscordClient.addLuaCallbacks(lua); #end
 
 		call('onCreate', []);
 		#end

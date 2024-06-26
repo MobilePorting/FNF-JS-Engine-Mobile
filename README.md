@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag"><img src="assets/exclude/images/jslol.png" alt="JSengine" width="150"></a>
+  <a href="https://github.com/PsychPorting/FNF-PsychEngine-NoBotplayLag"><img src="assets/exclude/images/jslol.png" alt="JSengine" width="150"></a>
   <br>
   <b>JS Engine</b>
   <br>
@@ -30,7 +30,7 @@ The engine:
 ## FAQ
 
 Q: Can I use this engine for my mod(s)?
-A: Yes, you can! just be sure to credit me (@JordanSantiago on YouTube) and give a link to this page. or [the link to download the latest release.](https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/latest)
+A: Yes, you can! just be sure to credit me (@JordanSantiago on YouTube) and give a link to this page. or [the link to download the latest release.](https://github.com/PsychPorting/FNF-PsychEngine-NoBotplayLag/releases/latest)
 
 Q: How do I (change the background, add characters, etc.)?
 A: You do it here the same way you'd do it in Psych Engine.

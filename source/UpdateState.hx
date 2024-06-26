@@ -158,7 +158,7 @@ class UpdateState extends MusicBeatState
 
 	function getUpdateLink()
 	{
-			online_url = "https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/releases/download/" + TitleState.updateVersion + "/FNF-JS-Engine.zip";
+			online_url = "https://github.com/PsychPorting/FNF-PsychEngine-NoBotplayLag/releases/download/" + TitleState.updateVersion + "/FNF-JS-Engine.zip";
 			trace("update url: " + online_url);
 	}
 

@@ -1,5 +1,6 @@
 package;
 
+#if DISCORD_ALLOWED
 import cpp.ConstCharStar;
 import cpp.ConstPointer;
 import cpp.Function;
@@ -134,3 +135,4 @@ class DiscordClient
         return value;
     }
 }
+#end

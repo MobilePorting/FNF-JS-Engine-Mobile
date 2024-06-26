@@ -18,14 +18,8 @@ import cpp.vm.Gc;
 #end
 import haxe.io.Input;
 import haxe.io.BytesBuffer;
-// crash handler stuff
-#if CRASH_HANDLER
-import openfl.events.UncaughtErrorEvent;
-import haxe.CallStack;
-import haxe.io.Path;
-import sys.FileSystem;
-import sys.io.File;
-import sys.io.Process;
+#if mobile
+import mobile.CopyState;
 #end
 
 #if linux
@@ -113,10 +107,20 @@ class Main extends Sprite {
 
 	public function new() {
 		super();
+		#if mobile
+		#if android
+		SUtil.doPermissionsShit();
+		#end
+		Sys.setCwd(SUtil.getStorageDirectory());
+		#end
+
+		CrashHandler.init();
+
 		#if windows //DPI AWARENESS BABY
 		@:functionCode('
 		#include <Windows.h>
 		SetProcessDPIAware()
+		DisableProcessWindowsGhosting()
 		')
 		#end
 
@@ -136,6 +140,7 @@ class Main extends Sprite {
 	}
 
 	private function setupGame():Void {
+		#if (openfl <= "9.2.0")
 		var stageWidth:Int = Lib.current.stage.stageWidth;
 		var stageHeight:Int = Lib.current.stage.stageHeight;
 
@@ -147,10 +152,11 @@ class Main extends Sprite {
 			game.height = Math.ceil(stageHeight / game.zoom);
 			game.skipSplash = true; // if the default flixel splash screen should be skipped
 		};
+		#end
 
 		ClientPrefs.loadDefaultKeys();
 
-		addChild(new FlxGame(game.width, game.height, game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
+		addChild(new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) !CopyState.checkExistingFiles() ? CopyState : #end game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
 
 		fpsVar = new FPS(10, 3, 0xFFFFFF);
 		addChild(fpsVar);
@@ -171,11 +177,19 @@ class Main extends Sprite {
 		FlxG.mouse.visible = false;
 		#end
 
-		#if CRASH_HANDLER
-		Lib.current.loaderInfo.uncaughtErrorEvents.addEventListener(UncaughtErrorEvent.UNCAUGHT_ERROR, onCrash);
+		#if mobile
+		lime.system.System.allowScreenTimeout = ClientPrefs.screensaver;
+		#if android
+		FlxG.android.preventDefaultKeys = [BACK]; 
+		#end
 		#end
 
-		#if desktop
+		FlxG.signals.gameResized.add(function (w, h) {
+			if(fpsVar != null)
+				fpsVar.positionFPS(10, 3, Math.min(w / FlxG.width, h / FlxG.height));
+		});
+
+		#if DISCORD_ALLOWED
 		if (!DiscordClient.initialized) {
 			DiscordClient.initialize();
 			Application.current.window.onClose.add(function() {
@@ -226,48 +240,4 @@ class Main extends Sprite {
 			return Math.pow(2, 32); // 4gb
 		#end
 	}
-
-	// Code was entirely made by sqirra-rng for their fnf engine named "Izzy Engine", big props to them!!!
-	// very cool person for real they don't get enough credit for their work
-	#if (CRASH_HANDLER)
-	function onCrash(e:UncaughtErrorEvent):Void {
-		var errorMessage:String = "";
-		var path:String;
-		var callStack:Array<StackItem> = CallStack.exceptionStack(true);
-		var dateNow:String = Date.now().toString();
-
-		dateNow = dateNow.replace(" ", "_");
-		dateNow = dateNow.replace(":", "'");
-
-		path = "crash/" + "JSEngine_" + dateNow + ".log";
-
-		for (stackItem in callStack) {
-			switch (stackItem) {
-				case FilePos(s, file, line, column):
-					errorMessage += file + " (Line " + line + ")\n";
-				default:
-					Sys.println(stackItem);
-			}
-		}
-
-		errorMessage += "\nUncaught Error: " 
-				+ e.error 
-				+ "\nPlease report this error to the GitHub page: https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag\n\n> Crash Handler written by: sqirra-rng"
-				+ "\nThe engine has saved a crash log inside the crash folder, If you're making a GitHub issue you might want to send that!";
-
-		if (!FileSystem.exists("crash/"))
-			FileSystem.createDirectory("crash/");
-
-		File.saveContent(path, errorMessage + "\n");
-
-		Sys.println(errorMessage);
-		Sys.println("Crash dump saved in " + Path.normalize(path));
-
-		Application.current.window.alert(errorMessage, "Error! JS Engine v" + MainMenuState.psychEngineJSVersion + " (" + Main.__superCoolErrorMessagesArray[FlxG.random.int(0, Main.__superCoolErrorMessagesArray.length)] + ")");
-		#if desktop
-		DiscordClient.close();
-		#end
-		Sys.exit(1);
-	}
-	#end
 }

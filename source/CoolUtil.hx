@@ -58,7 +58,6 @@ class CoolUtil
 		return (m / snap);
 	}
 
-	#if desktop
 	public static var resW:Float = 1;
 	public static var resH:Float = 1;
 	public static var baseW:Float = 1;
@@ -67,7 +66,6 @@ class CoolUtil
 		resW = wid/baseW;
 		resH = height/baseH;
 	}
-	#end
 
 	public static function getUsername():String
 	{
@@ -667,10 +665,14 @@ class CoolUtil
 		so Base Psych saves won't conflict with yours
 		@BeastlyGabi
 	**/
-	public static function getSavePath(folder:String = 'ShadowMario'):String {
+	public static function getSavePath(folder:String = 'JordanSantiago'):String {
 		@:privateAccess
 		return #if (flixel < "5.0.0") folder #else FlxG.stage.application.meta.get('company')
 			+ '/'
 			+ FlxSave.validate(FlxG.stage.application.meta.get('file')) #end;
+	}
+
+	public static inline function last<T>(array:Array<T>):T {
+		return array[array.length - 1];
 	}
 }

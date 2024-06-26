@@ -40,6 +40,8 @@ body:
     attributes:
       label: "What is your build target?"
       options:
+        - "Android"
+        - "iOS"
         - "Windows"
         - "Linux"
         - "Mac"

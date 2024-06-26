@@ -7,8 +7,18 @@ import flixel.graphics.FlxGraphic;
 import Controls;
 
 class ClientPrefs { //default settings if it can't find a save file containing your current settings
+	#if mobile
+	public static var screensaver:Bool = false;
+	#if android
+	public static var storageType:String = "EXTERNAL_DATA";
+	#end
+	#end
+	public static var mobileCAlpha:Float = FlxG.onMobile ? 0.6 : 0;
+	public static var mobileCEx:Bool = false;
+	public static var hitboxType:String = "No Gradient";
+	public static var hitboxPos:Bool = true;
 	//Gameplay Settings
-	public static var controllerMode:Bool = false;
+	public static var controllerMode:Bool = mobile.MobileControls.enabled;
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
 	public static var opponentStrums:Bool = true;
@@ -257,6 +267,16 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	}
 
 	public static function saveSettings() { //changes settings when you exit so that it doesn't reset every time you close the game
+		#if mobile
+		FlxG.save.data.screensaver = screensaver;
+		#if android
+		FlxG.save.data.storageType = storageType;
+		#end
+		#end
+		FlxG.save.data.mobileCAlpha = mobileCAlpha;
+		FlxG.save.data.mobileCEx = mobileCEx;
+		FlxG.save.data.hitboxType = hitboxType;
+		FlxG.save.data.hitboxPos = hitboxPos;
 		//Gameplay Settings
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.downScroll = downScroll;
@@ -454,6 +474,28 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	}
 
 	public static function loadPrefs() { //loads settings if it finds a save file containing the settings
+		#if mobile
+		if(FlxG.save.data.screensaver != null) {
+			screensaver = FlxG.save.data.screensaver;
+		}
+		#if android
+		if(FlxG.save.data.storageType != null) {
+			storageType = FlxG.save.data.storageType;
+		}
+		#end
+		#end
+		if(FlxG.save.data.mobileCAlpha != null) {
+			mobileCAlpha = FlxG.save.data.mobileCAlpha;
+		}
+		if(FlxG.save.data.mobileCEx != null) {
+			mobileCEx = FlxG.save.data.mobileCEx;
+		}
+		if(FlxG.save.data.hitboxType != null) {
+			hitboxType = FlxG.save.data.hitboxType;
+		}
+		if(FlxG.save.data.hitboxPos != null) {
+			hitboxPos = FlxG.save.data.hitboxPos;
+		}
 		//Gameplay
 		if(FlxG.save.data.controllerMode != null) {
 			controllerMode = FlxG.save.data.controllerMode;

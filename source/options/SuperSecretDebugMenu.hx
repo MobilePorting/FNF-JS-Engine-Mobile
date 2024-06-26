@@ -130,7 +130,7 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 	function doDaUpdate():Void {
 		if(ClientPrefs.checkForUpdates) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/main/THECHANGELOG.md");
+			var http = new haxe.Http("https://raw.githubusercontent.com/PsychPorting/FNF-PsychEngine-NoBotplayLag/main/THECHANGELOG.md");
 			var returnedData:Array<String> = [];
 
 			http.onData = function (data:String)
