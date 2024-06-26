@@ -6194,7 +6194,7 @@ class PlayState extends MusicBeatState
 				}
 			});
 
-			if(ClientPrefs.charsAndBG && ClientPrefs.mobileCExTaunt && mobileC.justPressed || FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false && ClientPrefs.spaceVPose){
+			if(ClientPrefs.charsAndBG && (ClientPrefs.mobileCEx && ClientPrefs.mobileCExTaunt) && mobileC.justPressed || FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false && ClientPrefs.spaceVPose){
 				char.playAnim('hey', true);
 				char.specialAnim = true;
 				char.heyTimer = 0.59;

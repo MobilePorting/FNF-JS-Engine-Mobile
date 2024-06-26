@@ -347,11 +347,9 @@ class MainMenuState extends MusicBeatState
 					});
 				}
 			}
-		#if (desktop)
 		else if (FlxG.keys.anyJustPressed(debugKeys)) {
 			FlxG.switchState(MasterEditorMenu.new);
 		}
-		#end
 		}
 
 		super.update(elapsed);
