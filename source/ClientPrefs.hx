@@ -18,6 +18,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var hitboxType:String = "No Gradient";
 	public static var hitboxPos:Bool = true;
 	public static var mobileCPlayStateVpad:Bool = false;
+	public static var mobileCExTaunt:Bool = true;
 	//Gameplay Settings
 	public static var controllerMode:Bool = mobile.MobileControls.enabled;
 	public static var downScroll:Bool = false;
@@ -279,6 +280,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.hitboxType = hitboxType;
 		FlxG.save.data.hitboxPos = hitboxPos;
 		FlxG.save.data.mobileCPlayStateVpad = mobileCPlayStateVpad;
+		FlxG.save.data.mobileCExTaunt = mobileCExTaunt;
 		//Gameplay Settings
 		FlxG.save.data.controllerMode = controllerMode;
 		FlxG.save.data.downScroll = downScroll;
@@ -500,6 +502,9 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.mobileCPlayStateVpad != null) {
 			mobileCPlayStateVpad = FlxG.save.data.mobileCPlayStateVpad;
+		}
+		if(FlxG.save.data.mobileCExTaunt != null) {
+			mobileCExTaunt = FlxG.save.data.mobileCExTaunt;
 		}
 		//Gameplay
 		if(FlxG.save.data.controllerMode != null) {

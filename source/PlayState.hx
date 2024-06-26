@@ -6181,6 +6181,7 @@ class PlayState extends MusicBeatState
 		// FlxG.watch.addQuick('asdfa', upP);
 		var char:Character = boyfriend;
 		if (opponentChart) char = dad;
+		final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 		if (startedCountdown && !char.stunned && generatedMusic)
 		{
 			// rewritten inputs???
@@ -6193,7 +6194,7 @@ class PlayState extends MusicBeatState
 				}
 			});
 
-			if(ClientPrefs.charsAndBG && FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false && ClientPrefs.spaceVPose){
+			if(ClientPrefs.charsAndBG && ClientPrefs.mobileCExTaunt && mobileC.justPressed || FlxG.keys.anyJustPressed(tauntKey) && !char.animation.curAnim.name.endsWith('miss') && char.specialAnim == false && ClientPrefs.spaceVPose){
 				char.playAnim('hey', true);
 				char.specialAnim = true;
 				char.heyTimer = 0.59;

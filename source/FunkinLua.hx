@@ -60,6 +60,13 @@ import hscript.Expr;
 import DiscordClient;
 #end
 
+#if android
+import android.widget.Toast as AndroidToast;
+import android.Tools as AndroidTools;
+//import android.os.BatteryManager as AndroidBatteryManager;
+import android.PsychJNI;
+#end
+
 using StringTools;
 
 class FunkinLua {
@@ -1451,15 +1458,33 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justPressed, name);
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
+			return switch (name.toUpperCase()) {
+			case "SPACE":
+				ClientPrefs.mobileCEx ? mobileC.justPressed : false || Reflect.getProperty(FlxG.keys.justPressed, "SPACE");
+			default:
+				Reflect.getProperty(FlxG.keys.justPressed, name);
+			}
 		});
 		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.pressed, name);
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
+			return switch (name.toUpperCase()) {
+			case "SPACE":
+				ClientPrefs.mobileCEx ? mobileC.pressed : false || Reflect.getProperty(FlxG.keys.pressed, "SPACE");
+			default:
+				Reflect.getProperty(FlxG.keys.pressed, name);
+			}
 		});
 		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
 		{
-			return Reflect.getProperty(FlxG.keys.justReleased, name);
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
+			return switch (name.toUpperCase()) {
+			case "SPACE":
+				ClientPrefs.mobileCEx ? mobileC.justReleased : false || Reflect.getProperty(FlxG.keys.justReleased, "SPACE");
+			default:
+				Reflect.getProperty(FlxG.keys.justReleased, name);
+			}
 		});
 
 		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String)
@@ -1523,6 +1548,7 @@ class FunkinLua {
 
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String) {
 			var key:Bool = false;
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
@@ -1532,29 +1558,31 @@ class FunkinLua {
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'space': key = FlxG.keys.justPressed.SPACE;//an extra key for convinience
+				case 'space': key = ClientPrefs.mobileCEx ? mobileC.justPressed : false || FlxG.keys.justPressed.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
 		Lua_helper.add_callback(lua, "keyPressed", function(name:String) {
 			var key:Bool = false;
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
-				case 'space': key = FlxG.keys.pressed.SPACE;//an extra key for convinience
+				case 'space': key = ClientPrefs.mobileCEx ? mobileC.pressed : false || FlxG.keys.pressed.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
 		Lua_helper.add_callback(lua, "keyReleased", function(name:String) {
 			var key:Bool = false;
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_R');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_R');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
-				case 'space': key = FlxG.keys.justReleased.SPACE;//an extra key for convinience
+				key = ClientPrefs.mobileCEx ? mobileC.justReleased : false || FlxG.keys.justReleased.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
@@ -2902,6 +2930,81 @@ class FunkinLua {
 			#end
 			return list;
 		});
+
+		Lua_helper.add_callback(lua, 'getMobileControlsMode', () -> return switch (mobile.MobileControls.mode)
+		{
+			case 'Pad-Left':
+				return 'left';
+			case 'Pad-Right':
+				return 'right';
+			case 'Pad-Custom':
+				return 'custom';
+			case 'Hitbox':
+				return 'hitbox';
+			default:
+				return 'none';
+		});
+
+		Lua_helper.add_callback(lua, "vibrate", (duration:Null<Int>, ?period:Null<Int>) ->
+		{
+			if (duration == null)
+				return luaTrace('vibrate: No duration specified.');
+			else if (period == null)
+				period = 0;
+			return lime.ui.Haptic.vibrate(period, duration);
+		});
+
+		#if android
+		//static var spicyPillow:AndroidBatteryManager = new AndroidBatteryManager();
+		//Lua_helper.add_callback(lua, "isRooted", AndroidTools.isRooted());
+		Lua_helper.add_callback(lua, "isDolbyAtmos", AndroidTools.isDolbyAtmos());
+		Lua_helper.add_callback(lua, "isAndroidTV", AndroidTools.isAndroidTV());
+		Lua_helper.add_callback(lua, "isTablet", AndroidTools.isTablet());
+		Lua_helper.add_callback(lua, "isChromebook", AndroidTools.isChromebook());
+		Lua_helper.add_callback(lua, "isDeXMode", AndroidTools.isDeXMode());
+		Lua_helper.add_callback(lua, "backJustPressed", FlxG.android.justPressed.BACK);
+		Lua_helper.add_callback(lua, "backPressed", FlxG.android.pressed.BACK);
+		Lua_helper.add_callback(lua, "backJustReleased", FlxG.android.justReleased.BACK);
+		Lua_helper.add_callback(lua, "menuJustPressed", FlxG.android.justPressed.MENU);
+		Lua_helper.add_callback(lua, "menuPressed", FlxG.android.pressed.MENU);
+		Lua_helper.add_callback(lua, "menuJustReleased", FlxG.android.justReleased.MENU);
+		Lua_helper.add_callback(lua, "getCurrentOrientation", () -> PsychJNI.getCurrentOrientationAsString());
+		Lua_helper.add_callback(lua, "setOrientation", function(orientation:Null<String>):Void
+		{
+			switch (orientation.toLowerCase())
+			{
+				case 'portrait':
+					orientation = 'Portrait';
+				case 'portraitupsidedown' | 'upsidedownportrait' | 'upsidedown':
+					orientation = 'PortraitUpsideDown';
+				case 'landscapeleft' | 'leftlandscape':
+					orientation = 'LandscapeLeft';
+				case 'landscaperight' | 'rightlandscape' | 'landscape':
+					orientation = 'LandscapeRight';
+				default:
+					orientation = null;
+			}
+			if (orientation == null)
+				return luaTrace('setOrientation: No orientation specified.');
+			PsychJNI.setOrientation(FlxG.stage.stageWidth, FlxG.stage.stageHeight, false, orientation);
+		});
+		Lua_helper.add_callback(lua, "minimizeWindow", () -> AndroidTools.minimizeWindow());
+		Lua_helper.add_callback(lua, "showToast", function(text:String, duration:Null<Int>, ?xOffset:Null<Int>, ?yOffset:Null<Int>)
+		{
+			if (text == null)
+				return luaTrace('showToast: No text specified.');
+			else if (duration == null)
+				return luaTrace('showToast: No duration specified.');
+
+			if (xOffset == null)
+				xOffset = 0;
+			if (yOffset == null)
+				yOffset = 0;
+
+			AndroidToast.makeText(text, duration, -1, xOffset, yOffset);
+		});
+		//Lua_helper.add_callback(lua, "isCharging", spicyPillow.isCharging());
+		#end
 
 		call('onCreate', []);
 		#end

@@ -30,6 +30,13 @@ class MobileOptionsSubState extends BaseOptionsMenu
 		false);
 		addOption(option);
 
+		var option:Option = new Option('Taunt on Extra Controls',
+		'If checked, when u press to extra ${MobileControls.mode == "Hitbox" ? 'hint' : 'button'} bf will be taunt.',
+		'mobileCExTaunt',
+		'bool',
+		true);
+		addOption(option);
+
 		var option:Option = new Option('Mobile Controls Opacity',
 		'Selects the opacity for the mobile buttons (be careful not to put it at 0 and lose track of your buttons).',
 		'mobileCAlpha',
