@@ -42,6 +42,13 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
 		title = 'Secret Debug Menu';
 		rpcTitle = 'Super Secret Debug Menu!!'; //for Discord Rich Presence
 
+		var option:Option = new Option('VirtualPad on PlayState',
+			"If checked, adds virtualpad to mobile controls select menu. (who uses that anyways)",
+			'mobileCPlayStateVpad',
+			'bool',
+			false);
+		addOption(option);
+
 		var option:Option = new Option('No Ascend RNG',
 			"If checked, makes the RNG Guns ascend part play every time.",
 			'noGunsRNG',

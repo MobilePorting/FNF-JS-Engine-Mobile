@@ -17,7 +17,7 @@ import openfl.utils.Assets;
 
 class MobileControlsSelectSubState extends FlxSubState
 {
-	private final controlsItems:Array<String> = ['Hitbox', 'Keyboard'];
+	private final controlsItems:Array<String> = ClientPrefs.mobileCPlayStateVpad ? ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Hitbox', 'Keyboard'] : ['Hitbox', 'Keyboard'];
 
 	private var virtualPad:FlxVirtualPad;
 	private var hitbox:FlxHitbox;
