@@ -141,7 +141,7 @@ class TitleState extends MusicBeatState
 		#if (CHECK_FOR_UPDATES)
 		if(ClientPrefs.checkForUpdates && !closedState) {
 			trace('checking for update');
-			var http = new haxe.Http("https://raw.githubusercontent.com/PsychPorting/FNF-PsychEngine-NoBotplayLag/main/THECHANGELOG.md");
+			var http = new haxe.Http("https://raw.githubusercontent.com/mcagabe19/JavaScript-Engine/main/THECHANGELOG.md");
 			var returnedData:Array<String> = [];
 
 			http.onData = function (data:String)

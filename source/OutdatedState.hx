@@ -79,11 +79,11 @@ class OutdatedState extends MusicBeatState
 				leftState = true;
 				#if windows FlxG.switchState(UpdateState.new);
 				#else
-				CoolUtil.browserLoad("https://github.com/PsychPorting/FNF-PsychEngine-NoBotplayLag/releases/latest");
+				CoolUtil.browserLoad("https://github.com/mcagabe19/JavaScript-Engine/releases/latest");
 				#end
 			}
 			if (FlxG.keys.justPressed.SPACE) {
-				CoolUtil.browserLoad("https://github.com/PsychPorting/FNF-PsychEngine-NoBotplayLag/releases/latest");
+				CoolUtil.browserLoad("https://github.com/mcagabe19/JavaScript-Engine/releases/latest");
 			}
 			else if(controls.BACK) {
 				leftState = true;
