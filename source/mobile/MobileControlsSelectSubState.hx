@@ -17,7 +17,7 @@ import openfl.utils.Assets;
 
 class MobileControlsSelectSubState extends FlxSubState
 {
-	private final controlsItems:Array<String> = ['Pad-Right', 'Pad-Left', 'Pad-Custom', 'Hitbox', 'Keyboard'];
+	private final controlsItems:Array<String> = ['Hitbox', 'Keyboard'];
 
 	private var virtualPad:FlxVirtualPad;
 	private var hitbox:FlxHitbox;
@@ -54,7 +54,7 @@ class MobileControlsSelectSubState extends FlxSubState
 			if (controlsItems[Math.floor(curSelected)] == 'Pad-Custom')
 				MobileControls.customVirtualPad = virtualPad;
 
-			FlxTransitionableState.skipNextTransOut = true;
+			FlxTransitionableState.skipNextTransOut = FlxTransitionableState.skipNextTransIn = true;
 			FlxG.resetState();
 		});
 		exitButton.setGraphicSize(Std.int(exitButton.width) * 3);
@@ -134,6 +134,8 @@ class MobileControlsSelectSubState extends FlxSubState
 		add(exPosition);
 
 		changeSelection();
+
+		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 
 		super.create();
 	}

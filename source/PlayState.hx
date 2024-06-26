@@ -1417,6 +1417,13 @@ class PlayState extends MusicBeatState
 		playerStrums = new FlxTypedGroup<StrumNote>();
 		opponentStrums = new FlxTypedGroup<StrumNote>();
 
+		#if !android
+		addVirtualPad(NONE, P);
+		addVirtualPadCamera();
+		virtualPad.visible = true;
+		#end
+		addMobileControls();
+
 		trace ('Loading chart...');
 		generateSong(SONG.song, startOnTime);
 
@@ -2718,7 +2725,7 @@ class PlayState extends MusicBeatState
 				setOnLuas('defaultPlayerStrumY' + i, playerStrums.members[i].y);
 			}
 
-			startedCountdown = true;
+			startedCountdown = mobileControls.visible = true;
 			Conductor.songPosition = -Conductor.crochet * 5;
 			setOnLuas('startedCountdown', true);
 			callOnLuas('onCountdownStarted', []);
@@ -4132,7 +4139,7 @@ class PlayState extends MusicBeatState
 				}
 		}
 
-		if (controls.PAUSE && startedCountdown && canPause && !heyStopTrying)
+		if (#if android FlxG.android.justReleased.BACK #else virtualPad.buttonP.justPressed #end || controls.PAUSE && startedCountdown && canPause && !heyStopTrying)
 		{
 			final ret:Dynamic = callOnLuas('onPause', [], false);
 			if(ret != FunkinLua.Function_Stop)
@@ -5260,6 +5267,7 @@ class PlayState extends MusicBeatState
 		}
 		if (endedTheSong || !ClientPrefs.resultsScreen)
 		{
+			mobileControls.visible = #if !android virtualPad.visible = #end false;
 			timeBarBG.visible = false;
 			timeBar.visible = false;
 			timeTxt.visible = false;
