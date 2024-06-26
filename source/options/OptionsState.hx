@@ -180,7 +180,7 @@ var konamiIndex:Int = 0; // Track the progress in the Konami code sequence
             var k = keys[kId];
 
             if (FlxG.keys.anyJustPressed([k])) {
-                #if desktop kId++; #end
+                kId++;
                 if (kId >= keys.length) {
 			enteringDebugMenu = true;
 			kId = 0;

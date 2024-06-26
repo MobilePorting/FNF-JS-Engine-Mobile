@@ -1859,10 +1859,8 @@ class ChartingState extends MusicBeatState
 	var metronomeStepper:FlxUINumericStepper;
 	var metronomeOffsetStepper:FlxUINumericStepper;
 	var disableAutoScrolling:FlxUICheckBox;
-	#if desktop
 	var waveformUseInstrumental:FlxUICheckBox;
 	var waveformUseVoices:FlxUICheckBox;
-	#end
 	var lilBuddiesBox:FlxUICheckBox;
 	var saveUndoCheck:FlxUICheckBox;
 	var soundEffectsCheck:FlxUICheckBox;
@@ -1874,7 +1872,6 @@ class ChartingState extends MusicBeatState
 		var tab_group_chart = new FlxUI(null, UI_box);
 		tab_group_chart.name = 'Charting';
 
-		#if desktop
 		if (FlxG.save.data.chart_waveformInst == null) FlxG.save.data.chart_waveformInst = false;
 		if (FlxG.save.data.chart_waveformVoices == null) FlxG.save.data.chart_waveformVoices = false;
 
@@ -1897,7 +1894,6 @@ class ChartingState extends MusicBeatState
 			FlxG.save.data.chart_waveformVoices = waveformUseVoices.checked;
 			updateWaveform();
 		};
-		#end
 
 		check_mute_inst = new FlxUICheckBox(10, 310, null, null, "Mute Instrumental (in editor)", 100);
 		check_mute_inst.checked = false;
@@ -2078,10 +2074,8 @@ class ChartingState extends MusicBeatState
 		tab_group_chart.add(disableAutoScrolling);
 		tab_group_chart.add(metronomeStepper);
 		tab_group_chart.add(metronomeOffsetStepper);
-		#if desktop
 		tab_group_chart.add(waveformUseInstrumental);
 		tab_group_chart.add(waveformUseVoices);
-		#end
 		tab_group_chart.add(lilBuddiesBox);
 		tab_group_chart.add(soundEffectsCheck);
 		tab_group_chart.add(saveUndoCheck);
@@ -3052,11 +3046,9 @@ class ChartingState extends MusicBeatState
 			gridBG = FlxGridOverlay.create(GRID_SIZE, GRID_SIZE, GRID_SIZE * 9, Std.int(GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]));
 		else gridBG = new FlxSprite().makeGraphic(Std.int(GRID_SIZE * 9), Std.int(GRID_SIZE * getSectionBeats() * 4 * zoomList[curZoom]), 0xffe7e6e6);
 
-		#if desktop
 		if(FlxG.save.data.chart_waveformInst || FlxG.save.data.chart_waveformVoices) {
 			updateWaveform();
 		}
-		#end
 
 		var leHeight:Int = Std.int(gridBG.height);
 		var foundNextSec:Bool = false;
@@ -3113,7 +3105,6 @@ class ChartingState extends MusicBeatState
 
 	var lastWaveformHeight:Int = 0;
 	function updateWaveform() {
-		#if desktop
 		if(waveformPrinted) {
 			var width:Int = Std.int(GRID_SIZE * 8);
 			var height:Int = Std.int(gridBG.height);
@@ -3212,7 +3203,6 @@ class ChartingState extends MusicBeatState
 		}
 
 		waveformPrinted = true;
-		#end
 	}
 
 	function waveformData(buffer:AudioBuffer, bytes:Bytes, time:Float, endTime:Float, multiply:Float = 1, ?array:Array<Array<Array<Float>>>, ?steps:Float):Array<Array<Array<Float>>>
