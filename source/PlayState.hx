@@ -1588,10 +1588,10 @@ class PlayState extends MusicBeatState
 			EngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 			EngineWatermark.scrollFactor.set();
 			add(EngineWatermark);
-			EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | JSE: Anniversary Update";
+			EngineWatermark.text = SONG.song + " " + CoolUtil.difficultyString() + " | JSE " + MainMenuState.psychEngineJSVersion;
 		}
 		if (ClientPrefs.watermarkStyle == 'Forever Engine') {
-			EngineWatermark = new FlxText(0, FlxG.height - 30, 0, "JS Engine: Anniversary Update", 16);
+			EngineWatermark = new FlxText(0, FlxG.height - 30, 0, "JS Engine v" + MainMenuState.psychEngineJSVersion, 16);
 			EngineWatermark.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, RIGHT, FlxTextBorderStyle.OUTLINE,FlxColor.BLACK);
 			EngineWatermark.updateHitbox();
 			EngineWatermark.x = FlxG.width - EngineWatermark.width - 5;
@@ -1604,7 +1604,7 @@ class PlayState extends MusicBeatState
 			EngineWatermark.scrollFactor.set();
 			if (ClientPrefs.downScroll) EngineWatermark.y = (FlxG.height * 0.9 + 50);
 			add(EngineWatermark);
-			EngineWatermark.text = "You are now playing " + SONG.song + " on " + CoolUtil.difficultyString() + "! (JSE: Anniversary Update)";
+			EngineWatermark.text = "You are now playing " + SONG.song + " on " + CoolUtil.difficultyString() + "! (JSE v" + MainMenuState.psychEngineJSVersion + ")";
 		}
 		if (ClientPrefs.watermarkStyle == 'Dave Engine') {
 			EngineWatermark = new FlxText(4,FlxG.height * 0.9 + 50,0,"", 16);

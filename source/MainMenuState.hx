@@ -26,7 +26,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineJSVersion:String = '1.27.2'; //This is also used for Discord RPC
+	public static var psychEngineJSVersion:String = '1.28.0'; //This is also used for Discord RPC
 	public static var psychEngineVersion:String = '0.6.3'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -142,12 +142,7 @@ class MainMenuState extends MusicBeatState
 
 		FlxG.camera.follow(camFollow, null, 1);
 
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 84, 0, "Happy anniversary, JS Engine!", 12);
-		versionShit.scrollFactor.set();
-		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
-		add(versionShit);
-
-		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "JS Engine: Anniversary Update (v" + psychEngineJSVersion + ")", 12);
+		var versionShit:FlxText = new FlxText(12, FlxG.height - 64, 0, "JS Engine v" + psychEngineJSVersion, 12);
 		versionShit.scrollFactor.set();
 		versionShit.setFormat("VCR OSD Mono", 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 		add(versionShit);

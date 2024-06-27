@@ -282,6 +282,8 @@ class TitleState extends MusicBeatState
 			Conductor.changeBPM(150);
 		case 'DDTO+':
 			Conductor.changeBPM(120);
+		case 'Anniversary':
+			Conductor.changeBPM(115);
 		}
 		persistentUpdate = true;
 

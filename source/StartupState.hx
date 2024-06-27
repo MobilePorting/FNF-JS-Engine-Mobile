@@ -50,19 +50,8 @@ class StartupState extends MusicBeatState
 						logo.screenCenter();
 						FlxTween.tween(logo, {alpha: 1, "scale.x": 1, "scale.y": 1}, 0.95, {
 							ease: FlxEase.expoOut,
-							onComplete: _ -> {
-								FlxG.camera.flash(0xFFFFFFFF, 0.6,null,true);
-								logo.loadGraphic(Paths.image('AnniversaryLogo', 'splash'));
-								FlxG.sound.play(Paths.sound('PARTY', 'splash'));
-								new FlxTimer().start(0.7, function(tmr:FlxTimer)
-								{
-									FlxTween.tween(logo, {alpha: 0}, 1, {
-										ease: FlxEase.linear,
-										onComplete: function(_){
-											FlxG.switchState(TitleState.new);
-										}
-									});
-								});
+								onComplete: _ -> {
+									FlxG.switchState(TitleState.new);
 							}
 						});
 					case 1:
