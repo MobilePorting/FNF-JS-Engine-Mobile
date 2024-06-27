@@ -199,8 +199,8 @@
 	<haxedef name='no-deprecation-warnings' />
 
 	<section if="android">
-			<!-- Do whatever you want I'm tired uninstall and install everytime 
-			<certificate path="key.keystore" password="javascriptengine" alias="jsport" alias-password="javascriptengine" unless="debug" /> -->
+			<!-- Do whatever you want I'm tired uninstall and install everytime -->
+			<certificate path="key.keystore" password="javascriptengine" alias="jsport" alias-password="javascriptengine" unless="debug" />
 		
 			<config:android permission="android.permission.WAKE_LOCK" />
 			<config:android permission="android.permission.INTERNET" />
