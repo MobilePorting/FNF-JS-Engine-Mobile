@@ -102,9 +102,9 @@ jobs:
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          automatic_release_tag: "1.21.0"
-          title: ""
+          prerelease: true
+          automatic_release_tag: "1.21.0-dev"
+          title: "1.21.0 Dev"
           files: |
             /home/runner/*.apk
             /home/runner/*.zip
