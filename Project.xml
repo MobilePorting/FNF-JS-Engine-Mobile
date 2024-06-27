@@ -60,8 +60,8 @@
 		<assets path="assets/secrets" rename="assets" exclude="*.mp3"  unless="web"/>
 	</section>
 
-	<!-- DONT ENABLE THIS!! shut up shadowmario ill enable whatever i want-->
-	<define name="CHECK_FOR_UPDATES" />
+	<!-- DONT ENABLE THIS!! -->
+	<define name="CHECK_FOR_UPDATES" if="officialBuild" />
 
 	<!-- <define name="PRELOAD_ALL" /> -->
 	<define name="PRELOAD_ALL" unless="web" />
