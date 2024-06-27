@@ -179,7 +179,7 @@ class MusicPlayer extends FlxGroup
 			}
 		}
 	
-		if (controls.RESET)
+		if (instance.virtualPad.buttonY.justPressed || controls.RESET)
 		{
 			playbackRate = 1;
 			setPlaybackRate();
@@ -249,7 +249,11 @@ class MusicPlayer extends FlxGroup
 
 		if (playingMusic)
 		{
-			instance.bottomText.text = "Press SPACE to Pause / Press ESCAPE to Exit / Press R to Reset the Song";
+			final buttonSpace:String = mobile.MobileControls.enabled ? 'X' : 'SPACE';
+			final buttonEscape:String = mobile.MobileControls.enabled ? 'B' : 'ESCAPE';
+			final buttonReset:String = mobile.MobileControls.enabled ? 'Y' : 'RESET';
+	
+			instance.bottomText.text = 'Press $buttonSpace to Pause / Press $buttonEscape to Exit / Press $buttonReset to Reset the Song';
 			positionSong();
 			
 			progressBar.setRange(0, FlxG.sound.music.length);
