@@ -74,8 +74,8 @@ class CrashHandler
 		catch (e:haxe.Exception)
 			trace('Couldn\'t save error message. (${e.message})');
 		#end
-        
-        SUtil.showPopUp('$m\n$stackLabel', "Error!");
+			
+		SUtil.showPopUp('$m\n$stackLabel\n\n${Main.__superCoolErrorMessagesArray[FlxG.random.int(0, 52)]}', "Error!");
 
 		#if html5
 		if (flixel.FlxG.sound.music != null)
