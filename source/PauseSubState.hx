@@ -293,6 +293,7 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.chartingMode = true;
 				case "Change Gameplay Settings":
 					persistentUpdate = false;
+					removeVirtualPad();
 					openSubState(new GameplayChangersSubstate());
 					GameplayChangersSubstate.inThePauseMenu = true;
 				case 'Toggle Botplay':
@@ -358,6 +359,14 @@ class PauseSubState extends MusicBeatSubstate
 				}
 			}
 		}
+	}
+
+	override function closeSubState() {
+		persistentUpdate = true;
+		super.closeSubState();
+		removeVirtualPad();
+		addVirtualPad(PlayState.chartingMode ? LEFT_FULL : UP_DOWN, A);
+		addVirtualPadCamera();
 	}
 
 	function deleteSkipTimeText()
