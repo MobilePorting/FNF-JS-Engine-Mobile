@@ -637,7 +637,7 @@ class FreeplayState extends MusicBeatState
 
 				curPlaying = false;
 				
-				if (virtualPad.buttonZ.pressed || FlxG.keys.pressed.SHIFT) {
+				if (FlxG.keys.pressed.SHIFT) {
 					LoadingState.loadAndSwitchState(ChartingState.new);
 				}else{
 					LoadingState.loadAndSwitchState(PlayState.new);
