@@ -61,6 +61,7 @@ class Main extends Sprite {
         "broken ch-... wait what are we talking about",
         "could not access variable you.dad",
         "What have you done...",
+	"Looks like skill issue to me-"
         "THERE ARENT COUGARS IN SCRIPTING!!! I HEARD IT!!",
         "no, thats not from system.windows.forms",
         "you better link a screenshot if you make an issue, or at least the crash.txt",
