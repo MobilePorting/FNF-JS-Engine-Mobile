@@ -195,6 +195,8 @@ class MainMenuState extends MusicBeatState
 		changeItem();
 		tipTextStartScrolling();
 
+		addVirtualPad(UP_DOWN, A_B);
+
 		super.create();
 	}
 
