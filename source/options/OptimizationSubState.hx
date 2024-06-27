@@ -48,7 +48,7 @@ class OptimizationSubState extends BaseOptionsMenu
 			"If checked, then the game will be allowed to garbage collect, reducing RAM usage I suppose.\nIf you experience memory leaks, turn this on, and\nif you experience lag with it on then turn it off.",
 			'enableGC',
 			'bool',
-			false);
+			true);
 		addOption(option);
 
 		var option:Option = new Option('Light Opponent Strums',
