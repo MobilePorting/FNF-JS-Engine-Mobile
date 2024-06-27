@@ -55,7 +55,7 @@ jobs:
           haxelib install hmm --quiet
           haxelib run hmm install --quiet
           haxelib remove hxCodec
-          haxelit git hxCodec https://github.com/polybiusproxy/hxCodec --quiet
+          haxelib git hxCodec https://github.com/polybiusproxy/hxCodec --quiet
 
       - name: Compile
         run: haxelib run lime build ios -D officialBuild -nosign -arm64 -final
