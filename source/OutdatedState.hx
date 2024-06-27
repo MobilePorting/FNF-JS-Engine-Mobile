@@ -68,6 +68,8 @@ class OutdatedState extends MusicBeatState
 			updateText.y = 710 - updateText.height;
 			updateText.x = 10;
 		add(updateText);
+
+		addVirtualPad(NONE, A_B);
 	}
 
 	override function update(elapsed:Float)
