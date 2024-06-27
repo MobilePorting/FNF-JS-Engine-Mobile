@@ -4073,6 +4073,7 @@ class PlayState extends MusicBeatState
 					botplayUsed = true;
 					new FlxTimer().start(10, function(tmr:FlxTimer)
 						{
+							#if VIDEOS_ALLOWED // ffs jordan
 							var vidSpr:FlxSprite;
 							var videoDone:Bool = true;
 							var video:MP4Handler = new MP4Handler(); // it plays but it doesn't show???
@@ -4094,6 +4095,9 @@ class PlayState extends MusicBeatState
 								vidSpr.visible = false;
 								Sys.exit(0);
 							});
+							#end
+							#else
+							Sys.exit(0);
 							#end
 						});
 				}
