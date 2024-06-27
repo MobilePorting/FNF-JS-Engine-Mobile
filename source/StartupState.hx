@@ -29,7 +29,7 @@ class StartupState extends MusicBeatState
 		logo.active = true;
 		add(logo);
 
-			skipTxt = new FlxText(0, FlxG.height, 0, 'Press ENTER To Skip', 16);
+			skipTxt = new FlxText(0, FlxG.height, 0, '${mobile.MobileControls.enabled ? 'Touch Your Screen' : 'Press ENTER'} To Skip', 16);
 			skipTxt.setFormat("Comic Sans MS Bold", 18, FlxColor.WHITE, FlxTextAlign.LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			skipTxt.borderSize = 1.5;
 			skipTxt.antialiasing = true;
@@ -85,7 +85,12 @@ class StartupState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if (FlxG.keys.justPressed.ENTER) FlxG.switchState(TitleState.new);
+		var justTouched:Bool = false;
+		for (touch in FlxG.touches.list)
+			if (touch.justPressed)
+				justTouched = true;
+
+		if (justTouched || FlxG.keys.justPressed.ENTER) FlxG.switchState(TitleState.new);
 
 		super.update(elapsed);
 	}
