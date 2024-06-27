@@ -130,7 +130,7 @@ class GameRendererSettingsSubState extends BaseOptionsMenu
 			5.0);
 		addOption(option);
 
-		option.minValue = 1.0;
+		option.minValue = 0;
 		option.maxValue = 60.0;
 		option.scrollSpeed = 3;
 		option.changeValue = 0.1;
