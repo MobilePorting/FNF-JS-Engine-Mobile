@@ -86,7 +86,7 @@ Always work 24/7, if you don't then you are lazy.
 Imagine fnf psych engine but with 1,000 features
 "I never get a single lag at my 1,000,000 note chart showcase with notes!" -Nael2xd
 What is a extratone or hypertone anyway? I still use my 1.2 million note hypertone
-Wanna get the early build but don't wanna wait for 2 weeks for a new update? Then go to https://github.com/mcagabe19/JavaScript-Engine/actions
+Wanna get the early build but don't wanna wait for 2 weeks for a new update? Then go to https://github.com/MobilePorting/JS-Engine-Mobile/actions
 What do you think about notes, 1 million notes exactly.
 I dare you to make a 1 hour long chart with characters with bg and make it accurate too :troll:
 meow meow nya~ :3

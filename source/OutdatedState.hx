@@ -81,11 +81,11 @@ class OutdatedState extends MusicBeatState
 				leftState = true;
 				#if windows FlxG.switchState(UpdateState.new);
 				#else
-				CoolUtil.browserLoad("https://github.com/mcagabe19/JavaScript-Engine/releases/latest");
+				CoolUtil.browserLoad("https://github.com/MobilePorting/JS-Engine-Mobile/releases/latest");
 				#end
 			}
 			if (virtualPad.buttonA.justPressed || FlxG.keys.justPressed.SPACE) {
-				CoolUtil.browserLoad("https://github.com/mcagabe19/JavaScript-Engine/releases/latest");
+				CoolUtil.browserLoad("https://github.com/MobilePorting/JS-Engine-Mobile/releases/latest");
 			}
 			else if(controls.BACK) {
 				leftState = true;

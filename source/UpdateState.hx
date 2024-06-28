@@ -158,7 +158,7 @@ class UpdateState extends MusicBeatState
 
 	function getUpdateLink()
 	{
-			online_url = "https://github.com/mcagabe19/JavaScript-Engine/releases/download/" + TitleState.updateVersion + "/FNF-JS-Engine.zip";
+			online_url = "https://github.com/MobilePorting/JS-Engine-Mobile/releases/download/" + TitleState.updateVersion + "/FNF-JS-Engine.zip";
 			trace("update url: " + online_url);
 	}
 
