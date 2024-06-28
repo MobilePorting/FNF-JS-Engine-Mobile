@@ -145,7 +145,7 @@ class MusicBeatState extends FlxUIState
 		return value;
 	}
 	static function set_windowNameSuffix2(value:String){
-		windowNameSuffix = value;
+		windowNameSuffix2 = value;
 		Application.current.window.title = windowNamePrefix + windowNameSuffix + windowNameSuffix2;
 		return value;
 	}
