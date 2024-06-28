@@ -91,6 +91,7 @@ class NotesSubState extends MusicBeatSubstate
 		changeSelection();
 
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
+		addVirtualPad(LEFT_FULL, A_B);
 	}
 
 	var changingNote:Bool = false;
