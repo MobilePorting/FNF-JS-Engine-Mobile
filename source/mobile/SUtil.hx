@@ -39,6 +39,11 @@ class SUtil
 
 	public static function mkDirs(directory:String):Void
 	{
+		try {
+			if (FileSystem.exists(directory) && FileSystem.isDirectory(directory))
+				return;
+		} catch (e:haxe.Exception) {trace('Something went wrong while looking at folder. (${e.message})')}
+
 		var total:String = '';
 		if (directory.substr(0, 1) == '/')
 			total = '/';
@@ -65,21 +70,6 @@ class SUtil
 					trace('Error while creating folder. (${e.message})');
 			}
 		}
-	}
-
-	public static function saveContent(fileName:String = 'file', fileExtension:String = '.json',
-			fileData:String = 'You forgor to add somethin\' in yo code :3'):Void
-	{
-		try
-		{
-			if (!FileSystem.exists('saves'))
-				FileSystem.createDirectory('saves');
-
-			File.saveContent('saves/' + fileName + fileExtension, fileData);
-			showPopUp(fileName + " file has been saved.", "Success!");
-		}
-		catch (e:haxe.Exception)
-			trace('File couldn\'t be saved. (${e.message})');
 	}
 
 	#if android
