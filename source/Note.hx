@@ -431,7 +431,7 @@ class Note extends FlxSprite
 		{
 			texture = 'HURTNOTE_assets';
 			noteSplashTexture = 'HURTnoteSplashes';
-			if (ClientPrefs.enableColorShader)
+			if (ClientPrefs.enableColorShader && colorSwap != null)
 			{
 				colorSwap.hue = colorSwap.saturation = colorSwap.brightness = 0;
 			}

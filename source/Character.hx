@@ -115,11 +115,7 @@ class Character extends FlxSprite
 	{
 		super(x, y);
 
-		#if (haxe >= "4.0.0")
 		animOffsets = new Map();
-		#else
-		animOffsets = new Map<String, Array<Dynamic>>();
-		#end
 		curCharacter = character;
 		this.isPlayer = isPlayer;
 		antialiasing = ClientPrefs.globalAntialiasing;
@@ -531,5 +527,41 @@ class Character extends FlxSprite
 	public function quickAnimAdd(name:String, anim:String)
 	{
 		animation.addByPrefix(name, anim, 24, false);
+	}
+}
+
+class Boyfriend extends Character
+{
+	public var startedDeath:Bool = false;
+
+	public function new(x:Float, y:Float, ?char:String = 'bf')
+	{
+		super(x, y, char, true);
+	}
+
+	override function update(elapsed:Float)
+	{
+		if (ClientPrefs.ffmpegMode) elapsed = 1 / ClientPrefs.targetFPS;
+		if (!debugMode && animation.curAnim != null)
+		{
+			if (animation.curAnim.name.startsWith('sing'))
+			{
+				holdTimer += elapsed;
+			}
+			else
+				holdTimer = 0;
+
+			if (animation.curAnim.name.endsWith('miss') && animation.curAnim.finished && !debugMode)
+			{
+				playAnim('idle', true, false, 10);
+			}
+
+			if (animation.curAnim.name == 'firstDeath' && animation.curAnim.finished && startedDeath)
+			{
+				playAnim('deathLoop');
+			}
+		}
+
+		super.update(elapsed);
 	}
 }

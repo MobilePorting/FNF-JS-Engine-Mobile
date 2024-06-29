@@ -169,6 +169,12 @@ class Main extends Sprite {
 			fpsVar.visible = ClientPrefs.showFPS;
 		}
 
+		#if (!web && flixel < "5.5.0")
+		FlxG.plugins.add(new ScreenShotPlugin());
+		#elseif (flixel >= "5.6.0")
+		FlxG.plugins.addIfUniqueType(new ScreenShotPlugin());
+		#end
+
 		FlxG.autoPause = false;
 
 		#if linux
