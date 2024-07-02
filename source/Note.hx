@@ -352,7 +352,10 @@ class Note extends FlxSprite
 		}
 	}
 	public function updateRGBColors() {
-        	if (Std.isOfType(this.shader, ColoredNoteShader))
+		if (!ClientPrefs.enableColorShader)
+			return;
+
+		if (Std.isOfType(this.shader, ColoredNoteShader))
 		{
 			if (mustPress)
 	    			!doOppStuff ? cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]) : cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
@@ -439,8 +442,12 @@ class Note extends FlxSprite
 
 		if (PlayState.isPixelStage) @:privateAccess reloadNote('', texture);
 
-		if (!isSustainNote) animation.play((ClientPrefs.noteColorStyle == 'Normal' || (ClientPrefs.noteStyleThing == 'TGT V4' || PlayState.isPixelStage) ? Note.colArray[noteData % 4] : 'red') + 'Scroll');
-		else animation.play((ClientPrefs.noteColorStyle == 'Normal' || (ClientPrefs.noteStyleThing == 'TGT V4' || PlayState.isPixelStage) ? Note.colArray[noteData % 4] : 'red') + (chartNoteData.isSustainEnd ? 'holdend' : 'hold'));
+		final colorShader:Bool = ClientPrefs.enableColorShader;
+		final colorStyle:String = ClientPrefs.noteColorStyle;
+		final shit:Bool = (colorStyle == 'Normal' && colorShader || (ClientPrefs.noteStyleThing == 'TGT V4' || PlayState.isPixelStage) || colorStyle != 'Normal' && !colorShader);
+
+		if (!isSustainNote) animation.play((shit) ? Note.colArray[noteData % 4] + 'Scroll' : 'redScroll');
+		else animation.play((shit) ? Note.colArray[noteData % 4] + (chartNoteData.isSustainEnd ? 'holdend' : 'hold') : 'red' + (chartNoteData.isSustainEnd ? 'holdend' : 'hold'));
 
 		if (!PlayState.isPixelStage) scale.set(0.7, 0.7);
 		updateHitbox();

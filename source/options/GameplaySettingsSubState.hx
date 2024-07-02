@@ -360,6 +360,9 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 	function onChangeHitsoundVolume()
 	{
-		FlxG.sound.play(Paths.sound('hitsound'), ClientPrefs.hitsoundVolume);
+		if (ClientPrefs.hitsoundType != 'none'){
+			final hitSoundString:String = ClientPrefs.hitsoundType;
+			FlxG.sound.play(Paths.sound("hitsounds/" + Std.string(hitSoundString).toLowerCase()), ClientPrefs.hitsoundVolume);
+		}
 	}
 }
