@@ -74,6 +74,7 @@ import openfl.filters.ShaderFilter;
 #end
 
 #if sys
+import sys.io.Process;
 import sys.FileSystem;
 import sys.io.File;
 #end
@@ -7628,6 +7629,12 @@ class PlayState extends MusicBeatState
 				ratingString = '?';
 
 				// Rating Name
+				if (ratingStuff.length <= 0) // NOW it should fall back to this as a safe guard
+				{
+					ratingName = 'Error!';
+					return;
+				}
+
 				if(ratingPercent >= 1)
 				{
 					ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
@@ -7800,7 +7807,7 @@ class PlayState extends MusicBeatState
 
 	// Render mode stuff.. If SGWLC isn't ok with this I will remove it :thumbsup:
 
-	public static var process:sys.io.Process;
+	public static var process:Process;
 	var ffmpegExists:Bool = false;
 
 	private function initRender():Void
@@ -7826,7 +7833,7 @@ class PlayState extends MusicBeatState
 
 		ffmpegExists = true;
 
-		process = new sys.io.Process('ffmpeg', ['-v', 'quiet', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', lime.app.Application.current.window.width + 'x' + lime.app.Application.current.window.height, '-r', Std.string(targetFPS), '-i', '-', '-c:v', ClientPrefs.vidEncoder, '-b', Std.string(ClientPrefs.renderBitrate * 1000000),  'assets/gameRenders/' + Paths.formatToSongPath(SONG.song) + '.mp4']);
+		process = new Process('ffmpeg', ['-v', 'quiet', '-y', '-f', 'rawvideo', '-pix_fmt', 'rgba', '-s', lime.app.Application.current.window.width + 'x' + lime.app.Application.current.window.height, '-r', Std.string(targetFPS), '-i', '-', '-c:v', ClientPrefs.vidEncoder, '-b', Std.string(ClientPrefs.renderBitrate * 1000000),  'assets/gameRenders/' + Paths.formatToSongPath(SONG.song) + '.mp4']);
 		FlxG.autoPause = false;
 	}
 
@@ -7847,9 +7854,10 @@ class PlayState extends MusicBeatState
 
 		if (process != null){
 			if (process.stdin != null)
-			        process.stdin.close();
+				process.stdin.close();
+
 			process.close();
-		        process.kill();
+			process.kill();
 		}
 
 		FlxG.autoPause = ClientPrefs.autoPause;

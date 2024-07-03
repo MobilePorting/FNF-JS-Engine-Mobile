@@ -144,7 +144,6 @@ class GameRendererSettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length-1]];
 		
 		super();
