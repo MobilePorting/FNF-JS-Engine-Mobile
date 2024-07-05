@@ -28,17 +28,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var ghostTapping:Bool = true;
 	public static var autoPause:Bool = true;
 	public static var complexAccuracy:Bool = false;
-	public static var communityGameMode:Bool = false;
-	public static var communityGameBot:Bool = false;
 	public static var startingSync:Bool = false;
 	public static var resyncType:String = 'Psych';
 	public static var noMarvJudge:Bool = false;
-	public static var coolGameplay:Bool = false;
 	public static var noReset:Bool = false;
 	public static var antiCheatEnable:Bool = false;
 	public static var instaRestart:Bool = false;
-	public static var moreMaxHP:Bool = false;
-	public static var zeroHealthLimit:Bool = false;
 	public static var ezSpam:Bool = false;
 	public static var shitGivesMiss:Bool = false;
 	public static var ratingIntensity:String = 'Normal';
@@ -46,11 +41,8 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var ghostTapAnim:Bool = true;
 	public static var hitsoundVolume:Float = 0;
 	public static var hitsoundType:String = 'osu!mania';
-	public static var moreSpecificSpeed:Bool = true;
 	public static var voiidTrollMode:Bool = false;
 	public static var trollMaxSpeed:String = 'Medium';
-	public static var minCGBMS:Int = 5;
-	public static var maxCGBMS:Int = 5;
 	public static var missSoundShit:Bool = false;
 
 	//Visuals & UI
@@ -66,7 +58,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var oldSusStyle:Bool = false;
 	public static var showRendered:Bool = false;
 	public static var showcaseMode:Bool = false;
-	public static var showMaxScore:Bool = true;
 	public static var timeBounce:Bool = true;
 	public static var lengthIntro:Bool = true;
 	public static var timebarShowSpeed:Bool = false;
@@ -83,7 +74,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var rateNameStuff:String = 'Quotes';
 	public static var goldSickSFC:Bool = true;
 	public static var colorRatingHit:Bool = true;
-	public static var colorRatingFC:Bool = false;
 	public static var marvRateColor:String = 'Golden';
 	public static var smoothHealth:Bool = true;
 	public static var smoothHPBug:Bool = false;
@@ -129,7 +119,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var showRamUsage:Bool = true;
 	public static var showMaxRamUsage:Bool = true;
 	public static var debugInfo:Bool = false;
-	public static var npsWithSpeed:Bool = true;
 	public static var tipTexts:Bool = true;
 	public static var discordRPC:Bool = true;
 
@@ -290,19 +279,12 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.ghostTapping = ghostTapping;
 		FlxG.save.data.autoPause = autoPause;
 		FlxG.save.data.complexAccuracy = complexAccuracy;
-		FlxG.save.data.communityGameMode = communityGameMode;
-		FlxG.save.data.communityGameBot = communityGameBot;
-		FlxG.save.data.maxCGBMS = maxCGBMS;
-		FlxG.save.data.minCGBMS = minCGBMS;
 		FlxG.save.data.startingSync = startingSync;
 		FlxG.save.data.resyncType = resyncType;
-		FlxG.save.data.coolGameplay = coolGameplay;
 		FlxG.save.data.noMarvJudge = noMarvJudge;
 		FlxG.save.data.noReset = noReset;
 		FlxG.save.data.antiCheatEnable = antiCheatEnable;
 		FlxG.save.data.instaRestart = instaRestart;
-		FlxG.save.data.moreMaxHP = moreMaxHP;
-		FlxG.save.data.zeroHealthLimit = zeroHealthLimit;
 		FlxG.save.data.ezSpam = ezSpam;
 		FlxG.save.data.shitGivesMiss = shitGivesMiss;
 		FlxG.save.data.ratingIntensity = ratingIntensity;
@@ -311,7 +293,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.missSoundShit = missSoundShit;
 		FlxG.save.data.hitsoundVolume = hitsoundVolume;
 		FlxG.save.data.hitsoundType = hitsoundType;
-		FlxG.save.data.moreSpecificSpeed = moreSpecificSpeed;
 		FlxG.save.data.voiidTrollMode = voiidTrollMode;
 		FlxG.save.data.trollMaxSpeed = trollMaxSpeed;
 
@@ -328,7 +309,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.oldSusStyle = oldSusStyle;
 		FlxG.save.data.showRendered = showRendered;
 		FlxG.save.data.showcaseMode = showcaseMode;
-		FlxG.save.data.showMaxScore = showMaxScore;
 		FlxG.save.data.timeBounce = timeBounce;
 		FlxG.save.data.lengthIntro = lengthIntro;
 		FlxG.save.data.timebarShowSpeed = timebarShowSpeed;
@@ -345,7 +325,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.rateNameStuff = rateNameStuff;
 		FlxG.save.data.goldSickSFC = goldSickSFC;
 		FlxG.save.data.colorRatingHit = colorRatingHit;
-		FlxG.save.data.colorRatingFC = colorRatingFC;
 		FlxG.save.data.marvRateColor = marvRateColor;
 		FlxG.save.data.smoothHealth = smoothHealth;
 		FlxG.save.data.smoothHPBug = smoothHPBug;
@@ -391,7 +370,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.showRamUsage = showRamUsage;
 		FlxG.save.data.showMaxRamUsage = showMaxRamUsage;
 		FlxG.save.data.debugInfo = debugInfo;
-		FlxG.save.data.npsWithSpeed = npsWithSpeed;
 		FlxG.save.data.tipTexts = tipTexts;
 		FlxG.save.data.discordRPC = discordRPC;
 
@@ -531,18 +509,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.complexAccuracy != null) {
 			complexAccuracy = FlxG.save.data.complexAccuracy;
 		}
-		if(FlxG.save.data.communityGameMode != null) {
-			communityGameMode = FlxG.save.data.communityGameMode;
-		}
-		if(FlxG.save.data.communityGameBot != null) {
-			communityGameBot = FlxG.save.data.communityGameBot;
-		}
-		if(FlxG.save.data.minCGBMS != null) {
-			minCGBMS = FlxG.save.data.minCGBMS;
-		}
-		if(FlxG.save.data.maxCGBMS != null) {
-			maxCGBMS = FlxG.save.data.maxCGBMS;
-		}
 		if(FlxG.save.data.startingSync != null) {
 			startingSync = FlxG.save.data.startingSync;
 		}
@@ -552,9 +518,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		if(FlxG.save.data.noMarvJudge != null) {
 			noMarvJudge = FlxG.save.data.noMarvJudge;
 		}
-		if(FlxG.save.data.coolGameplay != null) {
-			coolGameplay = FlxG.save.data.coolGameplay;
-		}
 		if(FlxG.save.data.noReset != null) {
 			noReset = FlxG.save.data.noReset;
 		}
@@ -563,12 +526,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.instaRestart != null) {
 			instaRestart = FlxG.save.data.instaRestart;
-		}
-		if(FlxG.save.data.moreMaxHP != null) {
-			moreMaxHP = FlxG.save.data.moreMaxHP;
-		}
-		if(FlxG.save.data.zeroHealthLimit != null) {
-			zeroHealthLimit = FlxG.save.data.zeroHealthLimit;
 		}
 		if(FlxG.save.data.ezSpam != null) {
 			ezSpam = FlxG.save.data.ezSpam;
@@ -593,9 +550,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.hitsoundType != null) {
 			hitsoundType = FlxG.save.data.hitsoundType;
-		}
-		if(FlxG.save.data.moreSpecificSpeed != null) {
-			moreSpecificSpeed = FlxG.save.data.moreSpecificSpeed;
 		}
 		if(FlxG.save.data.voiidTrollMode != null) {
 			voiidTrollMode = FlxG.save.data.voiidTrollMode;
@@ -640,9 +594,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.showcaseMode != null) {
 			showcaseMode = FlxG.save.data.showcaseMode;
-		}
-		if(FlxG.save.data.showMaxScore != null) {
-			showMaxScore = FlxG.save.data.showMaxScore;
 		}
 		if(FlxG.save.data.timeBounce != null) {
 			timeBounce = FlxG.save.data.timeBounce;
@@ -691,9 +642,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.colorRatingHit != null) {
 			colorRatingHit = FlxG.save.data.colorRatingHit;
-		}
-		if(FlxG.save.data.colorRatingFC != null) {
-			colorRatingFC = FlxG.save.data.colorRatingFC;
 		}
 		if(FlxG.save.data.marvRateColor != null) {
 			marvRateColor = FlxG.save.data.marvRateColor;
@@ -833,9 +781,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.debugInfo != null) {
 			debugInfo = FlxG.save.data.debugInfo;
-		}
-		if(FlxG.save.data.npsWithSpeed != null) {
-			npsWithSpeed = FlxG.save.data.npsWithSpeed;
 		}
 		if(FlxG.save.data.tipTexts != null) {
 			tipTexts = FlxG.save.data.tipTexts;

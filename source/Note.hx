@@ -442,9 +442,8 @@ class Note extends FlxSprite
 
 		if (PlayState.isPixelStage) @:privateAccess reloadNote('', texture);
 
-		final colorShader:Bool = ClientPrefs.enableColorShader;
 		final colorStyle:String = ClientPrefs.noteColorStyle;
-		final shit:Bool = (colorStyle == 'Normal' && colorShader || (ClientPrefs.noteStyleThing == 'TGT V4' || PlayState.isPixelStage) || colorStyle != 'Normal' && !colorShader);
+		final shit:Bool = (colorStyle == 'Normal' || (ClientPrefs.noteStyleThing == 'TGT V4' || PlayState.isPixelStage));
 
 		if (!isSustainNote) animation.play((shit) ? Note.colArray[noteData % 4] + 'Scroll' : 'redScroll');
 		else animation.play((shit) ? Note.colArray[noteData % 4] + (chartNoteData.isSustainEnd ? 'holdend' : 'hold') : 'red' + (chartNoteData.isSustainEnd ? 'holdend' : 'hold'));

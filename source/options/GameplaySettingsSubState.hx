@@ -91,44 +91,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-
-		var option:Option = new Option('CommunityGame Mode',
-			"What do you think this does?",
-			'communityGameMode',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('CommunityGame Botplay Mode',
-			"If enabled, Botplay inputs will have varying delays, like if a human was playing. \n(Disables the 'Even LESS Botplay Lag' option, even if it's on)",
-			'communityGameBot',
-			'bool',
-			false);
-		addOption(option);
-
-		if (ClientPrefs.communityGameBot)
-		{
-		var option:Option = new Option('Max MS (CGBM)',
-			"How late can note hits be when CommunityGame Botplay Mode is enabled?",
-			'maxCGBMS',
-			'int',
-			45);
-		option.minValue = 0;
-		option.maxValue = 180;
-		option.displayFormat = '%v ms';
-		addOption(option);
-
-		var option:Option = new Option('Min MS (CGBM)',
-			"How early can note hits be when CommunityGame Botplay Mode is enabled?",
-			'minCGBMS',
-			'int',
-			-20);
-		option.minValue = -30;
-		option.maxValue = 0;
-		option.displayFormat = '%v ms';
-		addOption(option);
-		}
-
+		
 		var option:Option = new Option('Beginning Sync',
 			"If checked, the game will resync the vocals for the first 500ms of a song.",
 			'startingSync',
@@ -151,13 +114,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Cool Gameplay',
-			"Get the COOLEST gameplay ever!!1!111!1!11",
-			'coolGameplay',
-			'bool',
-			false);
-		addOption(option);
-
 		var option:Option = new Option('Disable Reset Button',
 			"If checked, pressing Reset won't do anything.",
 			'noReset',
@@ -175,20 +131,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		var option:Option = new Option('Instant Respawn',
 			"Instantly respawn when you die.",
 			'instaRestart',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('More Max Health',
-			"If checked, increases your max health to 150% instead of 100%.",
-			'moreMaxHP',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('0% Limit on Practice',
-			"If checked, the health will stay at 0% if you lose all health in Practice mode.",
-			'zeroHealthLimit',
 			'bool',
 			false);
 		addOption(option);
@@ -330,14 +272,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 		if (ClientPrefs.safeFrames > 10) option.displayFormat = '%v (Will not save)';
 		option.changeValue = 0.1;
 		addOption(option);
-
-		var option:Option = new Option('More Specific Speed',
-			"If checked, Playback Rate's modifier will change in multiples of 0.01 instead of 0.05.",
-			'moreSpecificSpeed',
-			'bool',
-			true);
-		addOption(option);
-
+		
 		var option:Option = new Option('Voiid-Styled Troll Mode',
 			"If checked, Troll Mode's speed change will behave like in Voiid Chronicles 1.5/2.0",
 			'voiidTrollMode',

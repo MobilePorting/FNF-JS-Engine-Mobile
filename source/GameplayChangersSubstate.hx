@@ -51,6 +51,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.scrollSpeed = 2.0;
 		option.minValue = 0.35;
 		option.changeValue = 0.05;
+		option.slowChangeVal = 0.01;
 		option.decimals = 2;
 		if (goption.getValue() != "constant")
 		{
@@ -69,13 +70,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.scrollSpeed = 3;
 		option.minValue = 0.01;
 		option.maxValue = 30;
-		if (ClientPrefs.moreSpecificSpeed)
-		{
-		option.changeValue = 0.01;
-		} else
-		{
 		option.changeValue = 0.05;
-		}
+		option.slowChangeVal = 0.01;
 		option.displayFormat = '%vX';
 		option.decimals = 2;
 		optionsArray.push(option);
@@ -86,6 +82,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.minValue = -1;
 		option.maxValue = 50;
 		option.changeValue = 0.1;
+		option.slowChangeVal = 0.01;
+		option.decimals = 3;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
 
@@ -94,6 +92,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.minValue = -1;
 		option.maxValue = 50;
 		option.changeValue = 0.1;
+		option.slowChangeVal = 0.01;
+		option.decimals = 3;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
 
@@ -105,11 +105,11 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 
 		var option:GameplayOption = new GameplayOption('Practice Mode', 'practice', 'bool', false);
 		optionsArray.push(option);
-		option.onChange = onChangePractice; //Changing onChange is only needed if you want to make a special interaction after it changes the value
+		option.onChange = onChangeCheat;
 
 		var option:GameplayOption = new GameplayOption('Botplay', 'botplay', 'bool', false);
 		optionsArray.push(option);
-		option.onChange = onChangeBotplay; 
+		option.onChange = onChangeCheat; 
 
 		var option:GameplayOption = new GameplayOption('Play as Opponent', 'opponentplay', 'bool', false);
 		option.onChange = onChangeChartOption;
@@ -127,6 +127,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.minValue = -1;
 		option.maxValue = 10;
 		option.changeValue = 0.1;
+		option.slowChangeVal = 0.01;
 		option.displayFormat = '%vX';
 		optionsArray.push(option);
 
@@ -156,6 +157,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.minValue = 0;
 		option.maxValue = 100;
 		option.changeValue = 1;
+		option.slowChangeVal = 1;
 		option.displayFormat = '%v';
 		optionsArray.push(option);
 
@@ -167,7 +169,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.scrollSpeed = 0.5;
 		option.minValue = 0.1;
 		option.maxValue = 1;
-		option.changeValue = !ClientPrefs.moreSpecificSpeed ? 0.05 : 0.01;
+		option.changeValue = 0.05;
+		option.slowChangeVal = 0.01;
 		option.displayFormat = '%v';
 		option.decimals = 2;
 		optionsArray.push(option);
@@ -176,7 +179,8 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.scrollSpeed = 0.5;
 		option.minValue = 1;
 		option.maxValue = 10;
-		option.changeValue = !ClientPrefs.moreSpecificSpeed ? 0.05 : 0.01;
+		option.changeValue = 0.05;
+		option.slowChangeVal = 0.01;
 		option.displayFormat = '%v';
 		option.decimals = 2;
 		optionsArray.push(option);
@@ -309,7 +313,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 						if(pressed) {
 							var add:Dynamic = null;
 							if(curOption.type != 'string') {
-								add = controls.UI_LEFT ? -curOption.changeValue : curOption.changeValue;
+								add = controls.UI_LEFT ? (FlxG.keys.pressed.CONTROL ? -curOption.slowChangeVal : -curOption.changeValue) : (FlxG.keys.pressed.CONTROL ? curOption.slowChangeVal : curOption.changeValue);
 							}
 
 							switch(curOption.type)
@@ -474,14 +478,6 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		holdTime = 0;
 	}
 
-	function onChangePractice()
-	{
-		if(inThePauseMenu)
-		{
-			trace ("you really thought you would get away with it, invalidated your score");
-			PlayState.playerIsCheating = true;
-		}
-	}
 	function onChangeChartOption()
 	{
 		if(inThePauseMenu)
@@ -490,7 +486,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 			PauseSubState.requireRestart = true;
 		}
 	}
-	function onChangeBotplay()
+	function onChangeCheat()
 	{
 		if(inThePauseMenu)
 		{
@@ -554,6 +550,7 @@ class GameplayOption
 	public var curOption:Int = 0; //Don't change this
 	public var options:Array<String> = null; //Only used in string type
 	public var changeValue:Dynamic = 1; //Only used in int/float/percent type, how much is changed when you PRESS
+	public var slowChangeVal:Dynamic = 1; //how much is changed when you PRESS while holding CONTROL
 	public var minValue:Dynamic = null; //Only used in int/float/percent type
 	public var maxValue:Dynamic = null; //Only used in int/float/percent type
 	public var decimals:Int = 1; //Only used in float/percent type

@@ -452,7 +452,6 @@ class PlayState extends MusicBeatState
 	public var judgeTxt:FlxText;
 	public var judgeTxtTimer:FlxTimer = null;
 
-	public var maxScore:Float = 0;
 	public var oppScore:Float = 0;
 	public var songScore:Float = 0;
 	public var songHits:Int = 0;
@@ -547,7 +546,6 @@ class PlayState extends MusicBeatState
 
 	var theListBotplay:Array<String> = [];
 
-		var formattedMaxScore:String;
 		var formattedSongScore:String;
 		var formattedScore:String;
 		var formattedSongMisses:String;
@@ -639,14 +637,6 @@ class PlayState extends MusicBeatState
 
 		// for lua
 		instance = this;
-
-		if (ClientPrefs.moreMaxHP)
-		{
-		maxHealth = 3;
-		} else
-		{
-		maxHealth = 2;
-		}
 
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
@@ -987,11 +977,6 @@ class PlayState extends MusicBeatState
 		#if (MODS_ALLOWED && LUA_ALLOWED)
 		startLuasOnFolder('stages/' + curStage + '.lua');
 		#end
-			if(ClientPrefs.communityGameMode)
-			{
-				SONG.gfVersion = 'gf-bent';
-				trace('using the suspicious gf skin, horny ass mf.');
-			}
 		var gfVersion:String = SONG.gfVersion;
 
 		if(gfVersion == null || gfVersion.length < 1)
@@ -1876,8 +1861,6 @@ class PlayState extends MusicBeatState
 			if (ClientPrefs.showRendered)
 			renderedTxt.text = 'Rendered Notes: ' + FlxStringUtil.formatMoney(notes.length, false);
 
-		if (ClientPrefs.communityGameBot && botplayTxt != null) botplayTxt.destroy();
-
 		laneunderlayOpponent.cameras = [camHUD];
 		laneunderlay.cameras = [camHUD];
 		strumLineNotes.cameras = [camHUD];
@@ -2681,20 +2664,6 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		var ret:Dynamic = callOnLuas('onStartCountdown', [], false);
 
-		if (ClientPrefs.coolGameplay)
-		{
-			hueh231 = new FlxSprite();
-			hueh231.frames = Paths.getSparrowAtlas('dokistuff/coolgameplay');
-			hueh231.animation.addByPrefix('idle', 'Symbol', 24, true);
-			hueh231.animation.play('idle');
-			hueh231.antialiasing = ClientPrefs.globalAntialiasing;
-			hueh231.scrollFactor.set();
-			hueh231.setGraphicSize(Std.int(hueh231.width / FlxG.camera.zoom));
-			hueh231.updateHitbox();
-			hueh231.screenCenter();
-			hueh231.cameras = [camGame];
-			add(hueh231);
-		}
 		if (SONG.song.toLowerCase() == 'anti-cheat-song')
 		{
 			secretsong = new FlxSprite().loadGraphic(Paths.image('secretSong'));
@@ -2924,22 +2893,20 @@ class PlayState extends MusicBeatState
 			case 'Forever Engine': '•';
 			default: '|';
 		}
-		formattedMaxScore = ClientPrefs.showMaxScore ? ' / ' + FlxStringUtil.formatMoney(maxScore, false) : '';
 		formattedSongScore = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore;
-		formattedScore = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore) + formattedMaxScore;
-		if (ClientPrefs.scoreStyle == 'JS Engine') formattedScore = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(shownScore, false) : compactScore) + formattedMaxScore;
+		formattedScore = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songScore, false) : compactScore);
+		if (ClientPrefs.scoreStyle == 'JS Engine') formattedScore = (!ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(shownScore, false) : compactScore);
 		formattedSongMisses = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(songMisses, false) : compactMisses;
 		formattedCombo = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(combo, false) : compactCombo;
 		formattedNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(nps, false) : compactNPS;
 		formattedMaxNPS = !ClientPrefs.compactNumbers ? FlxStringUtil.formatMoney(maxNPS, false) : formatCompactNumber(maxNPS);
-		npsString = ClientPrefs.showNPS ? ' $divider ' + (cpuControlled && !ClientPrefs.communityGameBot ? 'Bot ' : '') + 'NPS/Max: ' + formattedNPS + '/' + formattedMaxNPS : '';
+		npsString = ClientPrefs.showNPS ? ' $divider ' + (cpuControlled && ClientPrefs.botWatermark ? 'Bot ' : '') + 'NPS/Max: ' + formattedNPS + '/' + formattedMaxNPS : '';
 		accuracy = Highscore.floorDecimal(ratingPercent * 100, 2) + '%';
 		fcString = ratingFC;
 
+		botText = cpuControlled && ClientPrefs.botWatermark ? ' $divider Botplay Mode' : '';
 
-		botText = cpuControlled && !ClientPrefs.communityGameBot ? ' $divider Botplay Mode' : '';
-
-		if (cpuControlled && !ClientPrefs.communityGameBot && ClientPrefs.botWatermark)
+		if (cpuControlled && ClientPrefs.botWatermark)
 		{
 			tempScore = 'Bot Score: ' + formattedScore + (ClientPrefs.showComboInfo ? ' $divider Bot Combo: ' + formattedCombo : '') + npsString + botText;
 			if (ClientPrefs.healthDisplay) scoreTxt.text += ' $divider Health: ' + FlxMath.roundDecimal(health * 50, 2) + '%';
@@ -3449,7 +3416,6 @@ class PlayState extends MusicBeatState
 		eventNotesCopy = eventNotes.copy();
 		generatedMusic = true;
 
-		maxScore = totalNotes * (ClientPrefs.noMarvJudge ? 350 : 500);
 		sectionsLoaded = 0;
 
 		var endTime = Sys.time();
@@ -3593,7 +3559,7 @@ class PlayState extends MusicBeatState
 
 			strumLineNotes.add(babyArrow);
 			babyArrow.postAddedToGroup();
-			if (ClientPrefs.enableColorShader && ClientPrefs.noteColorStyle != 'Normal' && ClientPrefs.noteStyleThing != 'TGT V4' && !PlayState.isPixelStage) 
+			if (ClientPrefs.noteColorStyle != 'Normal' && ClientPrefs.noteStyleThing != 'TGT V4' && !PlayState.isPixelStage) 
 			{
 				var arrowAngle = switch(i)
 				{
@@ -4047,7 +4013,7 @@ class PlayState extends MusicBeatState
 			botplaySine += 180 * elapsed;
 			botplayTxt.alpha = 1 - Math.sin((Math.PI * botplaySine) / 180 * playbackRate);
 		}
-		if((botplayTxt != null && cpuControlled && !ClientPrefs.showcaseMode) && ClientPrefs.randomBotplayText && !ClientPrefs.communityGameBot) {
+		if((botplayTxt != null && cpuControlled && !ClientPrefs.showcaseMode) && ClientPrefs.randomBotplayText) {
 			if(botplayTxt.text == "this text is gonna kick you out of botplay in 10 seconds" && !botplayUsed || botplayTxt.text == "Your Botplay Free Trial will end in 10 seconds." && !botplayUsed)
 				{
 					botplayUsed = true;
@@ -4356,8 +4322,8 @@ class PlayState extends MusicBeatState
 								timeTxt.text += ' (' + (!ffmpegMode ? playbackRateDecimal + 'x)' : 'Rendering)');
 							else timeTxt.text = SONG.song + ' (' + (!ffmpegMode ? playbackRateDecimal + 'x)' : 'Rendering)');
 						}
-						if (cpuControlled && ClientPrefs.timeBarType != 'Song Name' && !ClientPrefs.communityGameBot && ClientPrefs.botWatermark) timeTxt.text += ' (Bot)';
-						if(ClientPrefs.timebarShowSpeed && cpuControlled && ClientPrefs.timeBarType == 'Song Name' && !ClientPrefs.communityGameBot && ClientPrefs.botWatermark) timeTxt.text = SONG.song + ' (' + (!ffmpegMode ? FlxMath.roundDecimal(playbackRate, 2) + 'x)' : 'Rendering)') + ' (Bot)';
+						if (cpuControlled && ClientPrefs.timeBarType != 'Song Name' && ClientPrefs.botWatermark) timeTxt.text += ' (Bot)';
+						if(ClientPrefs.timebarShowSpeed && cpuControlled && ClientPrefs.timeBarType == 'Song Name' && ClientPrefs.botWatermark) timeTxt.text = SONG.song + ' (' + (!ffmpegMode ? FlxMath.roundDecimal(playbackRate, 2) + 'x)' : 'Rendering)') + ' (Bot)';
 					}
 				}
 				if(ffmpegMode) {
@@ -5250,8 +5216,7 @@ class PlayState extends MusicBeatState
 	}
 
 	function calculateResetTime(?sustainNote:Bool = false):Float {
-		if (ClientPrefs.strumLitStyle == 'BPM Based' && !ClientPrefs.communityGameBot) return (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
-		if (ClientPrefs.communityGameBot) return (sustainNote ? 0.15 : FlxG.random.float(0.05, 0.15)) / playbackRate;
+		if (ClientPrefs.strumLitStyle == 'BPM Based') return (Conductor.stepCrochet * 1.5 / 1000) / playbackRate;
 		return 0.15 / playbackRate;
 	}
 
@@ -5630,16 +5595,14 @@ class PlayState extends MusicBeatState
 		}
 
 		//tryna do MS based judgment due to popular demand
-		final daRating:Rating = Conductor.judgeNote(note, noteDiff, cpuControlled && !ClientPrefs.communityGameBot, miss);
+		final daRating:Rating = Conductor.judgeNote(note, noteDiff, cpuControlled, miss);
 		if (sickOnly && (noteDiff > ClientPrefs.sickWindow || noteDiff < -ClientPrefs.sickWindow))
 			doDeathCheck(true);
 
 		if (miss) daRating.image = 'miss';
 			else if (ratingsData[0].image == 'miss') ratingsData[0].image = !ClientPrefs.noMarvJudge ? 'perfect' : 'sick';
 
-		if (daRating.name == 'sick' && !ClientPrefs.noMarvJudge) maxScore -= 150 * Std.int(polyphony); //if you enable perfect judges and hit a sick, lower the max score by 150 points. otherwise it won't make sense
-
-		if ((cpuControlled && ClientPrefs.communityGameBot || cpuControlled && !ClientPrefs.lessBotLag || !cpuControlled) && !miss)
+		if ((cpuControlled || cpuControlled && !ClientPrefs.lessBotLag || !cpuControlled) && !miss)
 		{
 			if (!ClientPrefs.complexAccuracy) totalNotesHit += daRating.ratingMod;
 			if (ClientPrefs.complexAccuracy) totalNotesHit += wife;
@@ -5710,11 +5673,11 @@ class PlayState extends MusicBeatState
 
 		if(!practiceMode && !miss) {
 			songScore += daRating.score * polyphony;
-			if(!note.ratingDisabled || cpuControlled && ClientPrefs.communityGameBot && !note.ratingDisabled)
+			if(!note.ratingDisabled || cpuControlled && !note.ratingDisabled)
 			{
 				songHits++;
 				totalPlayed++;
-				if(!cpuControlled || cpuControlled && ClientPrefs.communityGameBot) {
+				if(!cpuControlled || cpuControlled) {
 				RecalculateRating(false);
 				}
 			}
@@ -5756,37 +5719,17 @@ class PlayState extends MusicBeatState
 				rating.y -= ClientPrefs.comboOffset[1];
 				if (!miss)
 				{
-					if (!allSicks && ClientPrefs.colorRatingFC && perfects > 0 && noteDiff > ClientPrefs.perfectWindow && ClientPrefs.ratingType != 'Tails Gets Trolled V4' && ClientPrefs.ratingType != 'Doki Doki+' && ClientPrefs.noMarvJudge)
-							{
-							rating.color = judgeColours.get('perfect');
-							}
-					if (!allSicks && ClientPrefs.colorRatingFC && sicks > 0 && noteDiff > ClientPrefs.perfectWindow && ClientPrefs.ratingType != 'Tails Gets Trolled V4' && ClientPrefs.ratingType != 'Doki Doki+' && ClientPrefs.marvRateColor != 'Golden' && !ClientPrefs.noMarvJudge)
-							{
-							rating.color = judgeColours.get('sick');
-							}
-					if (!allSicks && ClientPrefs.colorRatingFC && goods > 0 && noteDiff > ClientPrefs.perfectWindow && ClientPrefs.ratingType != 'Tails Gets Trolled V4' && ClientPrefs.ratingType != 'Doki Doki+')
-							{
-							rating.color = judgeColours.get('good');
-							}
-					if (!allSicks && ClientPrefs.colorRatingFC && bads > 0 && noteDiff > ClientPrefs.perfectWindow && ClientPrefs.ratingType != 'Tails Gets Trolled V4' && ClientPrefs.ratingType != 'Doki Doki+')
-							{
-							rating.color = judgeColours.get('bad');
-							}
-					if (!allSicks && ClientPrefs.colorRatingFC && shits > 0 && noteDiff > ClientPrefs.perfectWindow && ClientPrefs.ratingType != 'Tails Gets Trolled V4' && ClientPrefs.ratingType != 'Doki Doki+')
-							{
-							rating.color = judgeColours.get('shit');
-							}
 					if (!allSicks && ClientPrefs.colorRatingHit && ClientPrefs.ratingType != 'Tails Gets Trolled V4' && ClientPrefs.ratingType != 'Doki Doki+' && !miss)
-							{
-								switch (daRating.name) //This is so stupid, but it works
-								{
-								case 'sick':  rating.color = FlxColor.CYAN;
-								case 'good': rating.color = FlxColor.LIME;
-								case 'bad': rating.color = FlxColor.ORANGE;
-								case 'shit': rating.color = FlxColor.RED;
-								default: rating.color = FlxColor.WHITE;
-								}
-							}
+					{
+						switch (daRating.name) //This is so stupid, but it works
+						{
+						case 'sick':  rating.color = FlxColor.CYAN;
+						case 'good': rating.color = FlxColor.LIME;
+						case 'bad': rating.color = FlxColor.ORANGE;
+						case 'shit': rating.color = FlxColor.RED;
+						default: rating.color = FlxColor.WHITE;
+						}
+					}
 				}
 				insert(members.indexOf(strumLineNotes), rating);
 
@@ -5942,7 +5885,7 @@ class PlayState extends MusicBeatState
 					msTxt.x = (ClientPrefs.comboPopup ? offset + 280 : offset + 80);
 					msTxt.alpha = 1;
 					msTxt.text = FlxMath.roundDecimal(-noteDiff, 3) + " MS";
-					if (cpuControlled && !ClientPrefs.communityGameBot) msTxt.text = "0 MS (Bot)";
+					if (cpuControlled) msTxt.text = "0 MS (Bot)";
 					msTxt.x += ClientPrefs.comboOffset[0];
 					msTxt.y -= ClientPrefs.comboOffset[1];
 					if (combo >= 1000000) msTxt.x += 30;
@@ -5962,12 +5905,12 @@ class PlayState extends MusicBeatState
 						});
 					switch (daRating.name) //This is so stupid, but it works
 					{
-					case 'perfect': msTxt.color = FlxColor.YELLOW;
-					case 'sick':  msTxt.color = FlxColor.CYAN;
-					case 'good': msTxt.color = FlxColor.LIME;
-					case 'bad': msTxt.color = FlxColor.ORANGE;
-					case 'shit': msTxt.color = FlxColor.RED;
-					default: msTxt.color = FlxColor.WHITE;
+						case 'perfect': msTxt.color = FlxColor.YELLOW;
+						case 'sick':  msTxt.color = FlxColor.CYAN;
+						case 'good': msTxt.color = FlxColor.LIME;
+						case 'bad': msTxt.color = FlxColor.ORANGE;
+						case 'shit': msTxt.color = FlxColor.RED;
+						default: msTxt.color = FlxColor.WHITE;
 					}
 					if (miss) msTxt.color = FlxColor.fromRGB(204, 66, 66);
 				}
@@ -6424,7 +6367,7 @@ class PlayState extends MusicBeatState
 			}
 
 			if(daNote.mustPress) {
-				if((cpuControlled || usingBotEnergy && strumsHeld[daNote.noteData]) && daNote.strumTime + (ClientPrefs.communityGameBot && !daNote.isSustainNote ? FlxG.random.float(ClientPrefs.minCGBMS, ClientPrefs.maxCGBMS) : 0) <= Conductor.songPosition && !daNote.ignoreNote) {
+				if((cpuControlled || usingBotEnergy && strumsHeld[daNote.noteData]) && daNote.strumTime <= Conductor.songPosition && !daNote.ignoreNote) {
 					if (!ClientPrefs.showcaseMode || ClientPrefs.charsAndBG) goodNoteHit(daNote);
 					if (ClientPrefs.showcaseMode && !ClientPrefs.charsAndBG)
 					{
@@ -6444,7 +6387,7 @@ class PlayState extends MusicBeatState
 
 			if (Conductor.songPosition > noteKillOffset + daNote.strumTime)
 			{
-				if (daNote.mustPress && (!(cpuControlled || usingBotEnergy && strumsHeld[daNote.noteData]) || cpuControlled && ClientPrefs.communityGameBot) && !daNote.ignoreNote && !endingSong && !daNote.wasGoodHit) {
+				if (daNote.mustPress && (!(cpuControlled || usingBotEnergy && strumsHeld[daNote.noteData]) || cpuControlled) && !daNote.ignoreNote && !endingSong && !daNote.wasGoodHit) {
 					noteMiss(daNote);
 					if (ClientPrefs.missSoundShit)
 					{
@@ -6476,7 +6419,7 @@ class PlayState extends MusicBeatState
 				{
 					hitsound.play(true);
 					hitsound.pitch = playbackRate;
-					if (Assets.exists(hitsoundImageToLoad) && hitImagesFrame < 4)
+					if (FileSystem.exists('assets/shared/images/' + hitsoundImageToLoad + '.png') || FileSystem.exists(Paths.modFolders('images/' + hitsoundImageToLoad + '.png')) && hitImagesFrame < 4)
 					{
 						hitImagesFrame++;
 						hitsoundImage = new FlxSprite().loadGraphic(Paths.image(hitsoundImageToLoad));
@@ -6521,7 +6464,7 @@ class PlayState extends MusicBeatState
 
 					if (combo < 0) combo = 0;
 					if (polyphony > 1 && !note.isSustainNote) totalNotes += polyphony - 1;
-				if (!note.isSustainNote && !cpuControlled || !note.isSustainNote && cpuControlled && ClientPrefs.communityGameBot)
+				if (!note.isSustainNote && !cpuControlled)
 				{
 					combo += 1 * polyphony;
 					totalNotesPlayed += 1 * polyphony;
@@ -6549,7 +6492,7 @@ class PlayState extends MusicBeatState
 						RecalculateRating();
 					}
 				}
-				if (!note.isSustainNote && cpuControlled && !ClientPrefs.communityGameBot)
+				if (!note.isSustainNote && cpuControlled)
 				{
 					combo += 1 * polyphony;
 					totalNotesPlayed += 1 * polyphony;
@@ -7629,12 +7572,12 @@ class PlayState extends MusicBeatState
 				ratingString = '?';
 
 				// Rating Name
+				
 				if (ratingStuff.length <= 0) // NOW it should fall back to this as a safe guard
 				{
 					ratingName = 'Error!';
 					return;
 				}
-
 				if(ratingPercent >= 1)
 				{
 					ratingName = ratingStuff[ratingStuff.length-1][0]; //Uses last string
@@ -7839,7 +7782,7 @@ class PlayState extends MusicBeatState
 
 	private function pipeFrame():Void
 	{
-		if (!ffmpegExists)
+		if (!ffmpegExists || process == null)
 		return;
 
 		var img = lime.app.Application.current.window.readPixels(new lime.math.Rectangle(FlxG.scaleMode.offset.x, FlxG.scaleMode.offset.y, FlxG.scaleMode.gameSize.x, FlxG.scaleMode.gameSize.y));

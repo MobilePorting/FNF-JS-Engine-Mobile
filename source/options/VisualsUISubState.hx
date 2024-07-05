@@ -129,13 +129,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			false);
 		addOption(option);
 
-		var option:Option = new Option('Show Maximum Score',
-			'If checked, the score text will show the highest score you can achieve\nif you were to have 100% accuracy throughout the song.',
-			'showMaxScore',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Time Text Bounce',
 			'If checked, the time bar text will bounce on every beat hit.',
 			'timeBounce',
@@ -263,13 +256,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'colorRatingHit',
 			'bool',
 			true);
-		addOption(option);
-
-		var option:Option = new Option('Rating FC Colors',
-			'If checked, the ratings & combo will be colored based on your FC rating.',
-			'colorRatingFC',
-			'bool',
-			false);
 		addOption(option);
 
 		var option:Option = new Option('Perfect Rating Color:',
