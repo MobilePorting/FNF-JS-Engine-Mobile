@@ -97,7 +97,6 @@ using StringTools;
 
 class PlayState extends MusicBeatState
 {
-	public var noteRows:Array<Array<Array<Note>>> = [[],[]];
 	private var singAnimations:Array<String> = ['singLEFT', 'singDOWN', 'singUP', 'singRIGHT'];
 
 	public static var instance:PlayState;
@@ -200,12 +199,6 @@ class PlayState extends MusicBeatState
 	var intro2:FlxSound;
 	var intro1:FlxSound;
 	var introGo:FlxSound;
-	public var dadGhostTween:FlxTween;
-	public var bfGhostTween:FlxTween;
-	public var gfGhostTween:FlxTween;
-	public var dadGhost:FlxSprite;
-	public var bfGhost:FlxSprite;
-	public var gfGhost:FlxSprite;
 	public var dad:Character = null;
 	public var gf:Character = null;
 	public var boyfriend:Boyfriend = null;
@@ -891,17 +884,7 @@ class PlayState extends MusicBeatState
 		if(isPixelStage) {
 			introSoundsSuffix = '-pixel';
 		}
-
-		dadGhost = new FlxSprite();
-		bfGhost = new FlxSprite();
-		gfGhost = new FlxSprite();
 		add(gfGroup); //Needed for blammed lights
-		if (ClientPrefs.doubleGhost)
-		{
-		add(bfGhost);
-		add(gfGhost);
-		add(dadGhost);
-		}
 
 		add(dadGroup);
 		add(boyfriendGroup);
@@ -1059,41 +1042,24 @@ class PlayState extends MusicBeatState
 
 		if (!ClientPrefs.charsAndBG)
 		{
-		dad = new Character(0, 0, "");
-		dadGroup.add(dad);
+			dad = new Character(0, 0, "");
+			dadGroup.add(dad);
 
-		boyfriend = new Boyfriend(0, 0, "");
-		boyfriendGroup.add(boyfriend);
+			boyfriend = new Boyfriend(0, 0, "");
+			boyfriendGroup.add(boyfriend);
 		} else
 		{
-		dad = new Character(0, 0, SONG.player2);
-		startCharacterPos(dad, true);
-		dadGroup.add(dad);
-		startCharacterLua(dad.curCharacter);
-		dadNoteskin = dad.noteskin;
+			dad = new Character(0, 0, SONG.player2);
+			startCharacterPos(dad, true);
+			dadGroup.add(dad);
+			startCharacterLua(dad.curCharacter);
+			dadNoteskin = dad.noteskin;
 
-		boyfriend = new Boyfriend(0, 0, SONG.player1);
-		startCharacterPos(boyfriend);
-		boyfriendGroup.add(boyfriend);
-		startCharacterLua(boyfriend.curCharacter);
-		bfNoteskin = boyfriend.noteskin;
-		}
-		if (ClientPrefs.charsAndBG && ClientPrefs.doubleGhost)
-		{
-		dadGhost.visible = false;
-		dadGhost.antialiasing = true;
-		dadGhost.scale.copyFrom(dad.scale);
-		dadGhost.updateHitbox();
-		bfGhost.visible = false;
-		bfGhost.antialiasing = true;
-		bfGhost.scale.copyFrom(boyfriend.scale);
-		bfGhost.updateHitbox();
-		if (!stageData.hide_girlfriend || ClientPrefs.charsAndBG && !stageData.hide_girlfriend) { //stops crashes if the stage data specifies to hide gf
-		gfGhost.visible = false;
-		gfGhost.antialiasing = true;
-		gfGhost.scale.copyFrom(gf.scale);
-		gfGhost.updateHitbox();
-		}
+			boyfriend = new Boyfriend(0, 0, SONG.player1);
+			startCharacterPos(boyfriend);
+			boyfriendGroup.add(boyfriend);
+			startCharacterLua(boyfriend.curCharacter);
+			bfNoteskin = boyfriend.noteskin;
 		}
 
 		shouldDrainHealth = (opponentDrain || (opponentChart ? boyfriend.healthDrain : dad.healthDrain));
@@ -4982,7 +4948,7 @@ class PlayState extends MusicBeatState
 				if (ClientPrefs.showNotes)
 				{
 					for (i in strumLineNotes.members)
-						i.updateNoteSkin(i.player == 0 ? dadNoteskin : bfNoteskin);
+						if ((i.player == 0 ? dadNoteskin : bfNoteskin).length > 0) i.updateNoteSkin(i.player == 0 ? dadNoteskin : bfNoteskin);
 				}
 				if (ClientPrefs.noteColorStyle == 'Char-Based')
 				{
@@ -5475,100 +5441,6 @@ class PlayState extends MusicBeatState
 		Paths.image(pixelShitPart1 + "miss" + pixelShitPart2);
 
 		for (i in 0...10) Paths.image(pixelShitPart1 + 'num' + i + pixelShitPart2);
-	}
-
-	function doGhostAnim(char:String, animToPlay:String)
-	{
-	if (ClientPrefs.doubleGhost || ClientPrefs.charsAndBG)
-		{
-			var ghost:FlxSprite = dadGhost;
-			var player:Character = dad;
-
-			switch(char.toLowerCase().trim())
-			{
-				case 'bf':
-					ghost = bfGhost;
-					player = boyfriend;
-				case 'dad':
-					ghost = dadGhost;
-					player = dad;
-				case 'gf':
-					ghost = gfGhost;
-					player = gf;
-			}
-
-			if (player.animation != null)
-			{
-				ghost.frames = player.frames;
-
-				// Check for null before copying from player.animation
-				if (player.animation != null)
-				{
-					ghost.animation.copyFrom(player.animation);
-				}
-
-				ghost.x = player.x;
-				ghost.y = player.y;
-				ghost.animation.play(animToPlay, true);
-
-				// Check for null before accessing animOffsets
-				if (player.animOffsets != null && player.animOffsets.exists(animToPlay))
-				{
-					ghost.offset.set(player.animOffsets.get(animToPlay)[0], player.animOffsets.get(animToPlay)[1]);
-				}
-
-				ghost.flipX = player.flipX;
-				ghost.flipY = player.flipY;
-				ghost.blend = HARDLIGHT;
-				ghost.alpha = 0.8;
-				ghost.visible = true;
-
-				if (FlxG.camera.zoom < 1.35 && ClientPrefs.camZooms && camZooming && ClientPrefs.doubleGhostZoom)
-				{
-					FlxG.camera.zoom += 0.0075;
-					camHUD.zoom += 0.015;
-				}
-
-				switch (char.toLowerCase().trim())
-				{
-					case 'bf':
-						if (bfGhostTween != null)
-							bfGhostTween.cancel();
-						ghost.color = FlxColor.fromRGB(boyfriend.healthColorArray[0] + 50, boyfriend.healthColorArray[1] + 50, boyfriend.healthColorArray[2] + 50);
-						bfGhostTween = FlxTween.tween(bfGhost, {alpha: 0}, 0.75, {
-							ease: FlxEase.linear,
-							onComplete: function(twn:FlxTween)
-							{
-								bfGhostTween = null;
-							}
-						});
-
-					case 'dad':
-						if (dadGhostTween != null)
-							dadGhostTween.cancel();
-						ghost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
-						dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0}, 0.75, {
-							ease: FlxEase.linear,
-							onComplete: function(twn:FlxTween)
-							{
-								dadGhostTween = null;
-							}
-						});
-
-					case 'gf':
-						if (gfGhostTween != null)
-							gfGhostTween.cancel();
-						if (gf != null) ghost.color = FlxColor.fromRGB(gf.healthColorArray[0] + 50, gf.healthColorArray[1] + 50, gf.healthColorArray[2] + 50);
-						gfGhostTween = FlxTween.tween(gfGhost, {alpha: 0}, 0.75, {
-							ease: FlxEase.linear,
-							onComplete: function(twn:FlxTween)
-							{
-								gfGhostTween = null;
-							}
-						});
-				}
-			}
-		}
 	}
 
 	private function popUpScore(note:Note = null, ?miss:Bool = false):Void
@@ -6527,32 +6399,10 @@ class PlayState extends MusicBeatState
 					else oppAnimsFrame += 1;
 					final animToPlay:String = singAnimations[Std.int(Math.abs(note.noteData))];
 
-					playerChar = (!oppTrigger ? (doGf ? gf : boyfriend) : dad);
+					playerChar = (doGf ? gf : (!oppTrigger ? boyfriend : dad));
 					playerChar.holdTimer = 0;
 					if (ClientPrefs.cameraPanning) inline camPanRoutine(animToPlay, (!oppTrigger ? 'bf' : 'oppt'));
-					if (!ClientPrefs.doubleGhost) {
-						inline playerChar.playAnim(animToPlay + note.animSuffix, true);
-					}
-					else
-					{
-						if (!note.isSustainNote && noteRows[note.mustPress?0:1][note.row].length > 1)
-						{
-							final chord = noteRows[note.mustPress?0:1][note.row];
-							final animNote = chord[0];
-							final realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-							if (playerChar.mostRecentRow != note.row)
-							{
-								inline playerChar.playAnim(realAnim, true);
-							}
-
-							playerChar.mostRecentRow = note.row;
-							doGhostAnim((!oppTrigger ? (doGf ? 'gf' : 'bf') : 'dad'), animToPlay);
-						}
-						else
-						{
-							inline playerChar.playAnim(animToPlay + note.animSuffix, true);
-						}
-					}
+					inline playerChar.playAnim(animToPlay + note.animSuffix, true);
 
 					if(note.noteType == 'Hey!') {
 						playerChar = !doGf ? !oppTrigger ? boyfriend : dad : gf;
@@ -6713,35 +6563,11 @@ class PlayState extends MusicBeatState
 
 				final animToPlay:String = singAnimations[Std.int(Math.abs(daNote.noteData))] + daNote.animSuffix;
 				gfTrigger = daNote.gfNote;
-				oppChar = (!opponentChart ? (gfTrigger ? gf : dad) : boyfriend);
+				oppChar = (gfTrigger ? gf : (!opponentChart ? dad : boyfriend));
 
-				if (!ClientPrefs.doubleGhost) inline oppChar.playAnim(animToPlay, true);
+				inline oppChar.playAnim(animToPlay, true);
 				oppChar.holdTimer = 0;
 				if (ClientPrefs.cameraPanning) inline camPanRoutine(animToPlay, (!opponentChart ? 'dad' : 'bf'));
-				if (ClientPrefs.doubleGhost)
-				{
-					if (!daNote.isSustainNote && noteRows[daNote.mustPress?0:1][daNote.row].length > 1)
-					{
-						// potentially have jump anims?
-						final chord = noteRows[daNote.mustPress?0:1][daNote.row];
-						final animNote = chord[0];
-						final realAnim = singAnimations[Std.int(Math.abs(animNote.noteData))];
-						if (oppChar.mostRecentRow != daNote.row)
-						{
-							inline oppChar.playAnim(realAnim, true);
-						}
-
-						if (!daNote.noAnimation)
-						{
-							if(oppChar.mostRecentRow != daNote.row)
-								inline doGhostAnim((!opponentChart ? (gfTrigger ? 'gf' : 'dad') : 'bf'), animToPlay);
-						}
-						oppChar.mostRecentRow = daNote.row;
-					}
-					else{
-						inline oppChar.playAnim(animToPlay, true);
-					}
-				}
 			}
 			else if (daNote.isSustainNote && !ClientPrefs.oldSusStyle && oppAnimsFrame < 4)
 			{

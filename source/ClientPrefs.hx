@@ -80,8 +80,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 	public static var noBopLimit:Bool = false;
 	public static var denpaDrainBug:Bool = false;
 	public static var ogHPColor:Bool = false;
-	public static var doubleGhost:Bool = false;
-	public static var doubleGhostZoom:Bool = true;
 	public static var timeBarType:String = 'Time Left';
 	public static var scoreStyle:String = 'Psych Engine';
 	public static var timeBarStyle:String = 'Vanilla';
@@ -331,8 +329,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		FlxG.save.data.noBopLimit = noBopLimit;
 		FlxG.save.data.denpaDrainBug = denpaDrainBug;
 		FlxG.save.data.ogHPColor = ogHPColor;
-		FlxG.save.data.doubleGhost = doubleGhost;
-		FlxG.save.data.doubleGhostZoom = doubleGhostZoom;
 		FlxG.save.data.timeBarType = timeBarType;
 		FlxG.save.data.scoreStyle = scoreStyle;
 		FlxG.save.data.timeBarStyle = timeBarStyle;
@@ -660,12 +656,6 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		}
 		if(FlxG.save.data.ogHPColor != null) {
 			ogHPColor = FlxG.save.data.ogHPColor;
-		}
-		if(FlxG.save.data.doubleGhost != null) {
-			doubleGhost = FlxG.save.data.doubleGhost;
-		}
-		if(FlxG.save.data.doubleGhostZoom != null) {
-			doubleGhostZoom = FlxG.save.data.doubleGhostZoom;
 		}
 		if(FlxG.save.data.timeBarType != null) {
 			timeBarType = FlxG.save.data.timeBarType;

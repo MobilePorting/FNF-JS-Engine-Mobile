@@ -300,20 +300,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-
-		var option:Option = new Option('Double Note Ghosts',
-			"If this is checked, hitting a Double Note will show an afterimage, just like in VS Impostor!",
-			'doubleGhost',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('Double Note Ghost Camera Zoom',
-			'If unchecked, Double Note Ghosts will not zoom when they activate during gameplay.',
-			'doubleGhostZoom',
-			'bool',
-			true);
-		addOption(option);
 		
 		var option:Option = new Option('Time Bar:',
 			"What should the Time Bar display?",
@@ -610,13 +596,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			'debugInfo',
 			'bool',
 			false);
-		addOption(option);
-
-		var option:Option = new Option('NPS with Speed in Mind',
-			"If unchecked, the NPS won't have Playback Rate in mind.\n(Pretty dumb option to add, if you ask me!\nThat's why this is in the bottom of the Visuals & UI menu!)",
-			'npsWithSpeed',
-			'bool',
-			true);
 		addOption(option);
 
 		var option:Option = new Option('Main Menu Tips',

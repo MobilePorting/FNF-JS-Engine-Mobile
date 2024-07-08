@@ -42,7 +42,6 @@ typedef PreloadedChartNote = {
 
 class Note extends FlxSprite
 {
-	public var row:Int = 0;
 	public var strumTime:Float = 0;
 	public var mustPress:Bool = false;
 	public var doOppStuff:Bool = false;
@@ -360,7 +359,7 @@ class Note extends FlxSprite
 			if (mustPress)
 	    			!doOppStuff ? cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]) : cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]);
 	    		else
-				doOppStuff ? cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]) : cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
+				!doOppStuff ? cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.dad.healthColorArray[0], PlayState.instance.dad.healthColorArray[1], PlayState.instance.dad.healthColorArray[2]) : cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.boyfriend.healthColorArray[0], PlayState.instance.boyfriend.healthColorArray[1], PlayState.instance.boyfriend.healthColorArray[2]);
 
 			if (gfNote && PlayState.instance.gf != null) cast(this.shader, ColoredNoteShader).setColors(PlayState.instance.gf.healthColorArray[0], PlayState.instance.gf.healthColorArray[1], PlayState.instance.gf.healthColorArray[2]);
 		}
@@ -467,13 +466,6 @@ class Note extends FlxSprite
 		}
 		angle = 0;
 
-		if (ClientPrefs.doubleGhost && !isSustainNote && PlayState.instance != null)
-		{
-			row = Conductor.secsToRow(strumTime);
-			if(PlayState.instance.noteRows[mustPress?0:1][row] == null)
-				PlayState.instance.noteRows[mustPress?0:1][row] = [];
-				PlayState.instance.noteRows[mustPress ? 0 : 1][row].push(this);
-		}
 		clipRect = null;
 		if (!mustPress) 
 		{
