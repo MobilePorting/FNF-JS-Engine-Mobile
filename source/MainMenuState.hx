@@ -26,7 +26,7 @@ using StringTools;
 
 class MainMenuState extends MusicBeatState
 {
-	public static var psychEngineJSVersion:String = '1.28.0'; //This is also used for Discord RPC
+	public static var psychEngineJSVersion:String = '1.29.0'; //This is also used for Discord RPC
 	public static var psychEngineVersion:String = '0.6.3'; //This is also used for Discord RPC
 	public static var curSelected:Int = 0;
 
@@ -295,7 +295,7 @@ class MainMenuState extends MusicBeatState
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://ninja-muffin24.itch.io/funkin');
+					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag');
 				}
 				else
 				{
