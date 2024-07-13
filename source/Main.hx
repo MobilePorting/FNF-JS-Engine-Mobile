@@ -12,6 +12,7 @@ import openfl.display.Sprite;
 import openfl.events.Event;
 import openfl.display.StageScaleMode;
 import lime.app.Application;
+import backend.SSPlugin as ScreenShotPlugin;
 #if desktop
 import DiscordClient;
 import cpp.vm.Gc;
