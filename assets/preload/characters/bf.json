@@ -3,7 +3,7 @@
 		{
 			"offsets": [
 				-5,
-				0
+				-1
 			],
 			"loop": false,
 			"fps": 24,
@@ -166,6 +166,7 @@
 			"name": "bf pre attack"
 		}
 	],
+	"vocals_file": "bf",
 	"losing_colors": [
 		49,
 		176,

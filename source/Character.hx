@@ -39,6 +39,7 @@ typedef CharacterFile = {
 	var winning_colors:Array<Int>;
 	var losing_colors:Array<Int>;
 	var noteskin:String;
+	var vocals_file:String;
 
 	var health_drain:Bool;
 	var drain_amount:Float;
@@ -89,6 +90,7 @@ class Character extends FlxSprite
 	public var otherCharacters:Array<Character>;
 
 	public var hasMissAnimations:Bool = false;
+	public var vocalsFile:String = '';
 
 	public var isDeathCharacter:Bool = false;
 
@@ -231,6 +233,8 @@ class Character extends FlxSprite
 
 				shakeIntensity = (!Math.isNaN(json.shake_intensity) ? json.shake_intensity : 0.0075);
 				shakeDuration = (!Math.isNaN(json.shake_duration) ? json.shake_duration : 0.1);
+
+				vocalsFile = json.vocals_file != null ? json.vocals_file : '';
 
 				if(json.healthbar_colors != null && json.healthbar_colors.length > 2)
 					healthColorArray = json.healthbar_colors;

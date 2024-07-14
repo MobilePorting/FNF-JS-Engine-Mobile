@@ -14,8 +14,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				12,
-				-6
+				0,
+				0
 			],
 			"fps": 24,
 			"anim": "singLEFT",
@@ -25,8 +25,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				-10,
-				-50
+				0,
+				0
 			],
 			"fps": 24,
 			"anim": "singDOWN",
@@ -111,24 +111,42 @@
 			"name": "BF HEY"
 		}
 	],
+	"vocals_file": "bf-christmas",
+	"losing_colors": [
+		49,
+		176,
+		209
+	],
+	"isPlayer": true,
 	"no_antialiasing": false,
 	"image": "characters/bfChristmas",
+	"shake_duration": 0,
 	"position": [
 		0,
 		350
 	],
+	"health_drain": false,
+	"shake_intensity": 0,
 	"healthicon": "bf",
-	"iconAmount": 3,
+	"shake_screen": false,
+	"drain_floor": 0,
 	"flip_x": true,
 	"healthbar_colors": [
 		49,
 		176,
 		209
 	],
+	"drain_amount": 0,
 	"camera_position": [
 		0,
 		0
 	],
 	"sing_duration": 4,
+	"noteskin": null,
+	"winning_colors": [
+		49,
+		176,
+		209
+	],
 	"scale": 1
 }

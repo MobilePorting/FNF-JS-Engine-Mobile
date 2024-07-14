@@ -27,6 +27,7 @@ import sys.FileSystem;
 #end
 import flixel.ui.FlxButton;
 import flixel.addons.ui.FlxUIInputText;
+import haxe.Json;
 
 import music.MusicPlayer;
 
@@ -69,6 +70,7 @@ class FreeplayState extends MusicBeatState
 	var missingTextBG:FlxSprite;
 	var missingText:FlxText;
 	var songSearchText:FlxUIInputText;
+	var buttonTop:FlxButton;
 
 	var player:MusicPlayer;
 
@@ -222,7 +224,7 @@ class FreeplayState extends MusicBeatState
 		songSearchText.x = FlxG.width - songSearchText.width;
 		add(songSearchText);
 
-		var buttonTop:FlxButton = new FlxButton(0, songSearchText.y + songSearchText.height + 5, "", function() {
+		buttonTop = new FlxButton(0, songSearchText.y + songSearchText.height + 5, "", function() {
 			checkForSongsThatMatch(songSearchText.text);
 		});
 		buttonTop.setGraphicSize(Std.int(songSearchText.width), 50);
@@ -381,6 +383,7 @@ class FreeplayState extends MusicBeatState
 
 	public static var instPlaying:Int = -1;
 	public static var vocals:FlxSound = null;
+	public static var opponentVocals:FlxSound = null;
 	var holdTime:Float = 0;
 	override function update(elapsed:Float)
 	{
@@ -528,16 +531,63 @@ class FreeplayState extends MusicBeatState
 					var diff:String = (PlayState.SONG.specialAudioName.length > 1 ? PlayState.SONG.specialAudioName : CoolUtil.difficulties[curDifficulty]).toLowerCase();
 
 					if (PlayState.SONG.needsVoices)
-						vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song, diff));
-					else
+					{
 						vocals = new FlxSound();
-
-					FlxG.sound.list.add(vocals);
+						try
+						{
+							var playerVocals:String = getVocalFromCharacter(PlayState.SONG.player1);
+							var loadedVocals:openfl.media.Sound = Paths.voices(PlayState.SONG.song, diff, (playerVocals != null && playerVocals.length > 0) ? playerVocals : 'Player');
+							if(loadedVocals == null) loadedVocals = Paths.voices(PlayState.SONG.song, diff);
+							
+							if(loadedVocals != null && loadedVocals.length > 0)
+							{
+								vocals.loadEmbedded(loadedVocals);
+								FlxG.sound.list.add(vocals);
+								vocals.persist = vocals.looped = true;
+								vocals.volume = 0.8;
+								vocals.play();
+								vocals.pause();
+							}
+							else vocals = FlxDestroyUtil.destroy(vocals);
+						}
+						catch(e:Dynamic)
+						{
+							vocals = FlxDestroyUtil.destroy(vocals);
+						}
+						
+						opponentVocals = new FlxSound();
+						try
+						{
+							//trace('please work...');
+							var oppVocals:String = getVocalFromCharacter(PlayState.SONG.player2);
+							var loadedVocals:openfl.media.Sound = Paths.voices(PlayState.SONG.song, diff, (oppVocals != null && oppVocals.length > 0) ? oppVocals : 'Opponent');
+							
+							if(loadedVocals != null && loadedVocals.length > 0)
+							{
+								opponentVocals.loadEmbedded(loadedVocals);
+								FlxG.sound.list.add(opponentVocals);
+								opponentVocals.persist = opponentVocals.looped = true;
+								opponentVocals.volume = 0.8;
+								opponentVocals.play();
+								opponentVocals.pause();
+								//trace('it worked yaaay!!');
+							}
+							else opponentVocals = FlxDestroyUtil.destroy(opponentVocals);
+						}
+						catch(e:Dynamic)
+						{
+							//trace('FUUUCK');
+							opponentVocals = FlxDestroyUtil.destroy(opponentVocals);
+						}
+					}
 					FlxG.sound.playMusic(Paths.inst(PlayState.SONG.song, diff), 0.7);
-					vocals.play();
-					vocals.persist = true;
-					vocals.looped = true;
-					vocals.volume = 0.7;
+					if (vocals != null) 
+					{
+						vocals.play();
+						vocals.persist = true;
+						vocals.looped = true;
+						vocals.volume = 0.7;
+					}
 					instPlaying = curSelected;
 					Conductor.changeBPM(PlayState.SONG.bpm);
 					for (funnyIcon in grpIcons.members)
@@ -668,12 +718,28 @@ class FreeplayState extends MusicBeatState
 		super.update(elapsed);
 	}
 
-	public static function destroyFreeplayVocals() {
-		if(vocals != null) {
-			vocals.stop();
-			vocals.destroy();
+	function getVocalFromCharacter(char:String)
+	{
+		try
+		{
+			var path:String = Paths.getPath('characters/$char.json', TEXT);
+			#if MODS_ALLOWED
+			var character:Dynamic = Json.parse(File.getContent(path));
+			#else
+			var character:Dynamic = Json.parse(Assets.getText(path));
+			#end
+			return character.vocals_file;
 		}
-		vocals = null;
+		catch (e:Dynamic) {}
+		return null;
+	}
+
+	public static function destroyFreeplayVocals() {
+		if(vocals != null) vocals.stop();
+		vocals = FlxDestroyUtil.destroy(vocals);
+
+		if(opponentVocals != null) opponentVocals.stop();
+		opponentVocals = FlxDestroyUtil.destroy(opponentVocals);
 	}
 
 	function changeDiff(change:Int = 0)

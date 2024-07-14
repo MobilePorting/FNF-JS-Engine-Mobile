@@ -5,7 +5,7 @@ import flixel.sound.FlxSound;
 import flixel.FlxG;
 import flixel.util.FlxTimer;
 
-class EditingMusic
+class EditingMusic extends flixel.FlxBasic
 {
 	public var music:FlxSound = new FlxSound();
 	public var startTimer:FlxTimer = null;
@@ -13,10 +13,12 @@ class EditingMusic
 	public var musicPaused:Bool = false;
 
 	public function new() {
+		super();
 		playMusic(1);
 	}
 
 		public function shuffle() {
+			music.time = 0;
 			music.loadEmbedded(Paths.music('editorMusic/' + Std.string(FlxG.random.int(0, 4))));
 			music.fadeIn(1, 0, 0.5);
 			music.onComplete = shuffle;
@@ -29,15 +31,16 @@ class EditingMusic
 			startTimer = null;
 		}
 		public function unpauseMusic(time:Float = 0) {
+			musicPaused = false;
 			if (time > 0)
 		{
-				if (music.fadeTween != null)
-			music.fadeTween.cancel(); //cancel the fade tween so it doesnt NULL OBJECT REFERENCE
+			if (music.fadeTween != null)
+				music.fadeTween.cancel(); //cancel the fade tween so it doesnt NULL OBJECT REFERENCE
 			if (startTimer != null) startTimer.cancel();
-				startTimer = new FlxTimer().start(time, function(tmr:FlxTimer)
-					{
-					   				music.fadeIn(1, 0, 0.5);
-					});
+			startTimer = new FlxTimer().start(time, function(tmr:FlxTimer)
+				{
+					music.fadeIn(1, 0, 0.5);
+				});
 		}
 			else music.play();
 		}
@@ -49,10 +52,10 @@ class EditingMusic
 		{
 			unpauseMusic();
 		}
-		public function destroy()
+		override public function destroy()
 		{
-				if (music.fadeTween != null)
-		music.fadeTween.cancel(); //cancel the fade tween so it doesnt NULL OBJECT REFERENCE
+			if (music.fadeTween != null)
+				music.fadeTween.cancel(); //cancel the fade tween so it doesnt NULL OBJECT REFERENCE
 			if (startTimer != null) startTimer.cancel();
 		   	if (music != null) music.destroy();
 			reset();
@@ -71,5 +74,10 @@ class EditingMusic
 
 	public function reset() {
 		music.onComplete = null;
+	}
+	override public function update(elapsed:Float)
+	{
+		super.update(elapsed);
+		music.update(elapsed);
 	}
 }

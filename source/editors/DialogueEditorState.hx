@@ -408,6 +408,7 @@ class DialogueEditorState extends MusicBeatState
 			}
 		}
 		super.update(elapsed);
+		music.update(elapsed);
 	}
 
 	function changeText(add:Int = 0) {

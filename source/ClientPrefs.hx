@@ -229,6 +229,7 @@ class ClientPrefs { //default settings if it can't find a save file containing y
 		'note_down'		=> [S, DOWN],
 		'note_up'		=> [W, UP],
 		'note_right'	=> [D, RIGHT],
+		'bot_energy'	=> [CONTROL, NONE],
 		
 		'ui_left'		=> [A, LEFT],
 		'ui_down'		=> [S, DOWN],

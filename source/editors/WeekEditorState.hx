@@ -466,6 +466,7 @@ class WeekEditorState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+		music.update(elapsed);
 
 		lock.y = weekThing.y;
 		missingFileText.y = weekThing.y + 36;

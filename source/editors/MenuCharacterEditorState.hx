@@ -327,6 +327,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		}
 
 		super.update(elapsed);
+		music.update(elapsed);
 	}
 
 	function updateOffset() {

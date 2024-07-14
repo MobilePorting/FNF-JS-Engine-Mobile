@@ -476,7 +476,7 @@ class Paths
 		return file;
 	}
 	//Loads the Voices. Crucial for generateSong
-	static public function voices(song:String, ?difficulty:String = ''):Any
+	static public function voices(song:String, ?difficulty:String = '', ?postfix:String = null):Any
 	{
 		var formattedDifficulty:String = formatToSongPath(difficulty);
 		if (difficulty.contains(' ')) difficulty = formattedDifficulty;
@@ -485,7 +485,9 @@ class Paths
 		#else
 		if (difficulty != null)
 		{
-			var songKey:String = '${formatToSongPath(song)}/Voices-$difficulty';
+			var songKey:String = '${formatToSongPath(song)}/Voices';
+			if(postfix != null) songKey += '-' + postfix;
+			songKey += '-$difficulty';
 			if (FileSystem.exists(Paths.modFolders('songs/' + songKey + '.$SOUND_EXT')) || FileSystem.exists('assets/songs/' + songKey + '.$SOUND_EXT')) 
 			{
 				var voices = returnSound('songs', songKey);
@@ -493,6 +495,7 @@ class Paths
 			}
 		}
 		var songKey:String = '${formatToSongPath(song)}/Voices';
+		if(postfix != null) songKey += '-' + postfix;
 		var voices = returnSound('songs', songKey);
 		return voices;
 		#end

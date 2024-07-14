@@ -701,6 +701,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 			hudGroup.y = mainGroup.y;
 		}
 		super.update(elapsed);
+		music.update(elapsed);
 	}
 	
 	var _file:FileReference = null;

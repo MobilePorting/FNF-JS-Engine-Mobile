@@ -192,8 +192,11 @@ class MusicPlayer extends FlxGroup
 		{
 			if(FreeplayState.vocals != null)
 				FreeplayState.vocals.volume = (FreeplayState.vocals.length > FlxG.sound.music.time) ? 0.8 : 0;
+			if(FreeplayState.opponentVocals != null)
+				FreeplayState.opponentVocals.volume = (FreeplayState.opponentVocals.length > FlxG.sound.music.time) ? 0.8 : 0;
 			
-			if(FreeplayState.vocals != null && FreeplayState.vocals.length > FlxG.sound.music.time && Math.abs(FlxG.sound.music.time - FreeplayState.vocals.time) >= 25)
+			if((FreeplayState.vocals != null && FreeplayState.vocals.length > FlxG.sound.music.time && Math.abs(FlxG.sound.music.time - FreeplayState.vocals.time) >= 25) ||
+			(FreeplayState.opponentVocals != null && FreeplayState.opponentVocals.length > FlxG.sound.music.time && Math.abs(FlxG.sound.music.time - FreeplayState.opponentVocals.time) >= 25))
 			{
 				pauseOrResume();
 				setVocalsTime(FlxG.sound.music.time);
@@ -210,6 +213,8 @@ class MusicPlayer extends FlxGroup
 	{
 		if (FreeplayState.vocals != null && FreeplayState.vocals.length > time)
 			FreeplayState.vocals.time = time;
+		if (FreeplayState.opponentVocals != null && FreeplayState.opponentVocals.length > time)
+			FreeplayState.opponentVocals.time = time;
 	}
 
 	public function pauseOrResume(resume:Bool = false) 
@@ -221,6 +226,8 @@ class MusicPlayer extends FlxGroup
 
 			if (FreeplayState.vocals != null && FreeplayState.vocals.length > FlxG.sound.music.time && !FreeplayState.vocals.playing)
 				FreeplayState.vocals.resume();
+			if (FreeplayState.opponentVocals != null && FreeplayState.opponentVocals.length > FlxG.sound.music.time && !FreeplayState.opponentVocals.playing)
+				FreeplayState.opponentVocals.resume();
 		}
 		else 
 		{
@@ -228,6 +235,8 @@ class MusicPlayer extends FlxGroup
 
 			if (FreeplayState.vocals != null)
 				FreeplayState.vocals.pause();
+			if (FreeplayState.opponentVocals != null)
+				FreeplayState.opponentVocals.pause();
 		}
 	}
 
@@ -236,7 +245,7 @@ class MusicPlayer extends FlxGroup
 		FlxG.autoPause = (!playingMusic && ClientPrefs.autoPause);
 		active = visible = playingMusic;
 
-		instance.scoreBG.visible = instance.diffText.visible = instance.scoreText.visible = !playingMusic; //Hide Freeplay texts and boxes if playingMusic is true
+		instance.scoreBG.visible = instance.diffText.visible = instance.scoreText.visible = instance.searchText.visible = instance.songSearchText.visible = instance.buttonTop.visible = !playingMusic; //Hide Freeplay texts and boxes if playingMusic is true
 		songTxt.visible = timeTxt.visible = songBG.visible = playbackTxt.visible = playbackBG.visible = progressBar.visible = playingMusic; //Show Music Player texts and boxes if playingMusic is true
 
 		for (i in playbackSymbols)
@@ -346,6 +355,8 @@ class MusicPlayer extends FlxGroup
 		FlxG.sound.music.pitch = playbackRate;
 		if (FreeplayState.vocals != null)
 			FreeplayState.vocals.pitch = playbackRate;
+		if (FreeplayState.opponentVocals != null)
+			FreeplayState.opponentVocals.pitch = playbackRate;
 	}
 
 	function get_playing():Bool 

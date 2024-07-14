@@ -1,5 +1,6 @@
 package editors;
 
+import haxe.Json;
 import Section.SwagSection;
 import Song.SwagSong;
 import flixel.group.FlxGroup.FlxTypedGroup;
@@ -21,6 +22,8 @@ import openfl.events.KeyboardEvent;
 import FunkinLua;
 import Note.PreloadedChartNote;
 
+import Character.CharacterFile;
+
 using StringTools;
 
 class EditorPlayState extends MusicBeatState
@@ -38,6 +41,8 @@ class EditorPlayState extends MusicBeatState
 
 	var generatedMusic:Bool = false;
 	var vocals:FlxSound;
+	var opponentVocals:FlxSound;
+	var inst:FlxSound;
 
 	var startOffset:Float = 0;
 	var startPos:Float = 0;
@@ -109,11 +114,6 @@ class EditorPlayState extends MusicBeatState
 		splash.alpha = 0.0;
 
 		Paths.initDefaultSkin(4, PlayState.SONG.arrowSkin);
-		
-		if (PlayState.SONG.needsVoices)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-		else
-			vocals = new FlxSound();
 
 		generateSong(PlayState.SONG.song, startPos);
 		#if (LUA_ALLOWED && MODS_ALLOWED)
@@ -194,18 +194,44 @@ class EditorPlayState extends MusicBeatState
 		if (PlayState.SONG.windowName != null && PlayState.SONG.windowName != '')
 			MusicBeatState.windowNamePrefix = PlayState.SONG.windowName;
 
-		if (PlayState.SONG.needsVoices && ClientPrefs.songLoading)
-			vocals = new FlxSound().loadEmbedded(Paths.voices(PlayState.SONG.song));
-		else
+		var songData = PlayState.SONG;
+
+		var diff:String = (songData.specialAudioName.length > 1 ? songData.specialAudioName : CoolUtil.difficultyString()).toLowerCase();
+
+		Conductor.bpm = songData.bpm;
+
+		var boyfriendVocals:String = loadCharacterFile(PlayState.SONG.player1).vocals_file;
+		var dadVocals:String = loadCharacterFile(PlayState.SONG.player2).vocals_file;
+
+		if (ClientPrefs.songLoading)
+		{
 			vocals = new FlxSound();
+			opponentVocals = new FlxSound();
+			try
+			{
+				if (songData.needsVoices)
+				{
+					var playerVocals = Paths.voices(songData.song, diff, (boyfriendVocals == null || boyfriendVocals.length < 1) ? 'Player' : boyfriendVocals);
+					vocals.loadEmbedded(playerVocals != null ? playerVocals : Paths.voices(songData.song, diff));
+					
+					var oppVocals = Paths.voices(songData.song, diff, (dadVocals == null || dadVocals.length < 1) ? 'Opponent' : dadVocals);
+					if(oppVocals != null) opponentVocals.loadEmbedded(oppVocals);
+				}
+			}
+			catch(e:Dynamic) {}
 
-		if (ClientPrefs.songLoading) FlxG.sound.list.add(vocals);
-		if (ClientPrefs.songLoading) FlxG.sound.list.add(new FlxSound().loadEmbedded(Paths.inst(PlayState.SONG.song)));
+			vocals.volume = 0;
+			opponentVocals.volume = 0;
 
-		final noteData:Array<SwagSection> = PlayState.SONG.notes;
+			FlxG.sound.list.add(vocals);
+			FlxG.sound.list.add(opponentVocals);
+			inst = new FlxSound().loadEmbedded(Paths.inst(songData.song, diff));
+			FlxG.sound.list.add(inst);
+			FlxG.sound.music.volume = 0;
+		}
 
 		var currentBPMLol:Float = Conductor.bpm;
-		for (section in noteData) {
+		for (section in songData.notes) {
 			if (section.changeBPM) currentBPMLol = section.bpm;
 
 			for (songNotes in section.sectionNotes) {
@@ -314,12 +340,15 @@ class EditorPlayState extends MusicBeatState
 	function startSong():Void
 	{
 		startingSong = false;
+		@:privateAccess
+		FlxG.sound.playMusic(inst._sound, 1, false);
 		FlxG.sound.music.time = startPos;
-		FlxG.sound.music.play();
-		FlxG.sound.music.volume = 1;
 		vocals.volume = 1;
 		vocals.time = startPos;
 		vocals.play();
+		opponentVocals.volume = 1;
+		opponentVocals.time = startPos;
+		opponentVocals.play();
 	}
 
 	function sortByShit(Obj1:Note, Obj2:Note):Int
@@ -330,7 +359,10 @@ class EditorPlayState extends MusicBeatState
 	private function endSong() {
 		Conductor.songPosition = 0;
 		FlxG.sound.music.stop();
-		vocals.stop();
+		vocals.pause();
+		vocals.destroy();
+		opponentVocals.pause();
+		opponentVocals.destroy();
 		LoadingState.loadAndSwitchState(editors.ChartingState.new);
 	}
 
@@ -342,6 +374,7 @@ class EditorPlayState extends MusicBeatState
 		{
 			FlxG.sound.music.pause();
 			vocals.pause();
+			opponentVocals.pause();
 			LoadingState.loadAndSwitchState(editors.ChartingState.new);
 		}
 		if (FlxG.keys.justPressed.SIX)
@@ -402,6 +435,7 @@ class EditorPlayState extends MusicBeatState
 	override public function onFocus():Void
 	{
 		vocals.play();
+		opponentVocals.play();
 
 		super.onFocus();
 	}
@@ -409,6 +443,7 @@ class EditorPlayState extends MusicBeatState
 	override public function onFocusLost():Void
 	{
 		vocals.pause();
+		opponentVocals.pause();
 
 		super.onFocusLost();
 	}
@@ -425,21 +460,35 @@ class EditorPlayState extends MusicBeatState
 
 	override function stepHit()
 	{
-		super.stepHit();
-		if (FlxG.sound.music.time > Conductor.songPosition + 20 || FlxG.sound.music.time < Conductor.songPosition - 20)
+		if (PlayState.SONG.needsVoices && FlxG.sound.music.time >= -ClientPrefs.noteOffset)
 		{
-			resyncVocals();
+			var timeSub:Float = Conductor.songPosition - Conductor.offset;
+			var syncTime:Float = 20;
+			if (Math.abs(FlxG.sound.music.time - timeSub) > syncTime ||
+			(vocals.length > 0 && Math.abs(vocals.time - timeSub) > syncTime) ||
+			(opponentVocals.length > 0 && Math.abs(opponentVocals.time - timeSub) > syncTime))
+			{
+				resyncVocals();
+			}
 		}
+		super.stepHit();
 	}
 
 	function resyncVocals():Void
 	{
-		vocals.pause();
-
 		FlxG.sound.music.play();
 		Conductor.songPosition = FlxG.sound.music.time;
-		vocals.time = FlxG.sound.music.time;
+		if (Conductor.songPosition <= vocals.length)
+		{
+			vocals.time = Conductor.songPosition;
+		}
+
+		if (Conductor.songPosition <= opponentVocals.length)
+		{
+			opponentVocals.time = Conductor.songPosition;
+		}
 		vocals.play();
+		opponentVocals.play();
 	}
 	private function onKeyPress(event:KeyboardEvent):Void
 	{
@@ -621,8 +670,8 @@ class EditorPlayState extends MusicBeatState
 
 			if (!daNote.mustPress && daNote.strumTime <= Conductor.songPosition)
 			{
-				if (PlayState.SONG.needsVoices)
-					vocals.volume = 1;
+				if (PlayState.SONG.needsVoices && opponentVocals.length <= 0)
+					opponentVocals.volume = 1;
 
 				var time:Float = 0.15;
 				if(daNote.isSustainNote && !daNote.animation.curAnim.name.endsWith('end')) {
@@ -978,6 +1027,31 @@ class EditorPlayState extends MusicBeatState
 		var splash:NoteSplash = grpNoteSplashes.recycle(NoteSplash);
 		splash.setupNoteSplash(x, y, data, skin, hue, sat, brt);
 		grpNoteSplashes.add(splash);
+	}
+
+	function loadCharacterFile(char:String):CharacterFile {
+		var characterPath:String = 'characters/' + char + '.json';
+		#if MODS_ALLOWED
+		var path:String = Paths.modFolders(characterPath);
+		if (!FileSystem.exists(path)) {
+			path = Paths.getPreloadPath(characterPath);
+		}
+
+		if (!FileSystem.exists(path))
+		#else
+		var path:String = Paths.getPreloadPath(characterPath);
+		if (!OpenFlAssets.exists(path))
+		#end
+		{
+			path = Paths.getPreloadPath('characters/' + Character.DEFAULT_CHARACTER + '.json'); //If a character couldn't be found, change him to BF just to prevent a crash
+		}
+
+		#if MODS_ALLOWED
+		var rawJson = File.getContent(path);
+		#else
+		var rawJson = OpenFlAssets.getText(path);
+		#end
+		return cast Json.parse(rawJson);
 	}
 	
 	override function destroy() {
