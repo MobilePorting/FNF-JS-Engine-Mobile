@@ -63,14 +63,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			true);
 		addOption(option);
 
-		var option:Option = new Option('HP Gain Type:',
-			"Which engine's health gain do you want?",
-			'healthGainType',
-			'string',
-			'VS Impostor',
-			['VS Impostor', 'Kade (1.2)', 'Kade (1.4.2 to 1.6)', 'Kade (1.6+)', 'Doki Doki+', 'Psych Engine', 'Leather Engine']);
-		addOption(option);
-
 		var option:Option = new Option('Ghost Tapping',
 			"If checked, you won't get misses from pressing keys\nwhile there are no notes able to be hit.",
 			'ghostTapping',
@@ -97,14 +89,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			'startingSync',
 			'bool',
 			false);
-		addOption(option);
-
-		var option:Option = new Option('Resync Style:',
-			"What type of resync do you prefer?",
-			'resyncType',
-			'string',
-			'Leather',
-			['Leather', 'Psych']);
 		addOption(option);
 
 		var option:Option = new Option('Remove Perfect!! Judgement',

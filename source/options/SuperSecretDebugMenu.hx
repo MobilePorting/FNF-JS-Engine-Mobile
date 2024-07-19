@@ -11,6 +11,7 @@ import flixel.group.FlxGroup.FlxTypedGroup;
 import flixel.math.FlxMath;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
+import haxe.Exception;
 import lime.utils.Assets;
 import flixel.FlxSubState;
 import flash.text.TextField;
@@ -124,9 +125,7 @@ class SuperSecretDebugMenu extends BaseOptionsMenu
     nextMessage = function() {
         i++;
         if (i >= messages.length) {
-                           var e:MusicBeatState = null;
-                            @:privateAccess
-                            e.update(0);
+			throw new Exception('bruh'); // this is easier + better to do
         } else {
             openSubState(new Prompt(messages[i], 0, function() {nextMessage();}, null, false, "Yes", "No"));
         }

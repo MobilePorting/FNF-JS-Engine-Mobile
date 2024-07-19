@@ -78,14 +78,7 @@ class OptimizationSubState extends BaseOptionsMenu
 			'bool',
 			false);
 		addOption(option);
-
-		var option:Option = new Option('Show Unused Combo Popup',
-			"If checked, shows the unused 'Combo' popup, ONLY when Botplay is inactive.",
-			'comboPopup',
-			'bool',
-			false);
-		addOption(option);
-
+		
 		var option:Option = new Option('Load Songs',
 			"If unchecked, PlayState songs won't be loaded.\n(Breaks a few of the Visuals & UI things, so be careful!)",
 			'songLoading',

@@ -91,7 +91,7 @@ class CreditsState extends MusicBeatState
 			[''],
 			['JS Engine People'],
 			['Jordan Santiago',			'jor',				'Coded everything into JS Engine',								'https://twitter.com/JordansTweetsYT',			'FF9300'],
-			['Stefan2008',			'stef',				"Granted permission to use the Results Screen code",								'https://www.youtube.com/channel/UC9Nwf21GbaEm_h0Ka9gxZjQ', '800080'],
+			// ['Stefan2008',			'stef',				"Granted permission to use the Results Screen code",								'https://www.youtube.com/channel/UC9Nwf21GbaEm_h0Ka9gxZjQ', '800080'], Remove me for god sake because i don't need it! Add someone who works on your fork
 			[''],
 			['Special Engine Thanks'],
 			['Denpa Engine',			'denpeak',				'The crossfade code used for this engine',								'https://github.com/UmbratheUmbreon/PublicDenpaEngine',			'FF9300'],
@@ -99,6 +99,7 @@ class CreditsState extends MusicBeatState
 			['cabfile',			'cabfile',				'Created the new Video Rendering Mode for FNF',								'https://github.com/cabfile',			'DDDDDD'],
 			['SomeGuyWhoLovesCoding',			'sgwlc',				'Rewrote the chart loading system and ported the new Rendering Mode to source',								'https://www.youtube.com/channel/UCMSusVA3DY-4EtiGP4zKAJA',			'FFBD40'],
 			['Betopia', 'nothing', 'Freeplay Search bar creator', 'https://www.youtube.com/channel/UCfjyz9xRhZiRbLMteQloVeg', 'FFFFFF'],
+			['CDEV Engine', 'cdev', 'Update Screen Creator', 'https://github.com/Core5570RYT/FNF-CDEV-Engine', '00427B'],
 			['Psych Engine Team'],
 			['Shadow Mario',		'shadowmario',		'Main Programmer of Psych Engine',								'https://twitter.com/Shadow_Mario_',	'444444'],
 			['RiverOaken',			'river',			'Main Artist/Animator of Psych Engine',							'https://twitter.com/RiverOaken',		'B42F71'],

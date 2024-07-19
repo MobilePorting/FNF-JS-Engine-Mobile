@@ -244,13 +244,6 @@ class VisualsUISubState extends BaseOptionsMenu
 			addOption(option);
 		}
 
-		var option:Option = new Option('Golden Sick on MFC/SFC',
-			'If checked, your Sick! & Perfect!! ratings will be golden if your FC rating is better than GFC.',
-			'goldSickSFC',
-			'bool',
-			true);
-		addOption(option);
-
 		var option:Option = new Option('Rating Accuracy Color',
 			'If checked, the ratings & combo will be colored based on the actual rating.',
 			'colorRatingHit',
@@ -283,13 +276,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('No Icon Bop Limiter',
 			'Another comedic option that is hilarious when turned on.\nWhen enabled, disables the Icon Bop limiter which..\nleads to some interesting visuals when spam happens.',
 			'noBopLimit',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('Denpa Engine Health Bug', //ill remove this at the request of AT - Jordan Santiago
-			'If checked, well.. replicates the health drain bug in Denpa Engine.',
-			'denpaDrainBug',
 			'bool',
 			false);
 		addOption(option);
@@ -442,13 +428,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		var option:Option = new Option('Show MS Popup',
 			"If checked, hitting a note will also show how late/early you hit it.",
 			'showMS',
-			'bool',
-			false);
-		addOption(option);
-
-		var option:Option = new Option('Use Wrong Popup Camera',
-			'If checked, the popups will use the game world camera instead of the HUD.',
-			'wrongCameras',
 			'bool',
 			false);
 		addOption(option);
