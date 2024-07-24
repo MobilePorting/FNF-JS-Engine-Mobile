@@ -197,16 +197,8 @@
 	<haxedef name="message.reporting" value="pretty" />
 	<haxedef name='no-deprecation-warnings' />
 
-	<section if="android">
-			<!-- Do whatever you want I'm tired uninstall and install everytime -->
-			<certificate path="key.keystore" password="javascriptengine" alias="jsport" alias-password="javascriptengine" unless="debug" />
-		
-			<config:android permission="android.permission.WAKE_LOCK" />
-			<config:android permission="android.permission.INTERNET" />
-			<config:android permission="android.permission.VIBRATE" />
-			<config:android permission="android.permission.ACCESS_NETWORK_STATE" />
-			<config:android permission="android.permission.MANAGE_EXTERNAL_STORAGE" />
-	</section>
+	<!-- Do whatever you want I'm tired uninstall and install everytime -->
+	<certificate path="key.keystore" password="javascriptengine" alias="jsport" alias-password="javascriptengine" if="android" unless="debug" />
 
 	<!-- Javascript breaks with inline for reasons unknown -->
 	<haxedef name="no-inline" if="html5"/>
