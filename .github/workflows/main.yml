@@ -56,7 +56,7 @@ jobs:
     runs-on: macos-${{matrix.version}}
     strategy:
       matrix:
-        version: [12, 13]
+        version: [12, 13, 14]
     steps:
       - name: Checkout
         uses: actions/checkout@main
@@ -64,7 +64,7 @@ jobs:
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.5
 
       - name: Install Libraries
         run: |
