@@ -1,8 +1,10 @@
-1.29.0;
+1.30.0;
 
-You can now take screenshots while using the engine! To use, press F2
-Some options were removed due to either being replicable in LUA or just simply not being needed
-Normal and Custom hitsounds can now have custom image popups.
-The Donate button now redirects you to the JS Engine Github instead of the FNF itch.io page.
-Fixed an Invalid Cast error
-Fixed the game crashing in case you didnt add a quote for 100% accuracy while adding custom quotes OR you deleted the ratingQuotes folder (it'll say "Error!" instead)
+you can now split the vocals between both characters!
+the editor music and the song intro sounds are now dependent on the game's volume!
+You can now rebind the key that's used to activate Bot Energy!
+Hitsound Volume now saves!
+4 options have been removed for being useless/recreatable in LUA!
+Bot Energy no longer instantly kills you if you miss spam.
+possibly fixed a bug where the engine would crash with ghost characters sometimes
+fixed a crash that would occur if a section's sectionNotes was null and you tried clearing the left/right side of a section

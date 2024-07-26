@@ -723,7 +723,7 @@ class CharacterEditorState extends MusicBeatState
 			var selectedAnimation:Int = Std.parseInt(pressed);
 			ghostChar.visible = false;
 			char.alpha = 1;
-			if(selectedAnimation > 0) {
+			if(selectedAnimation > 0 && ghostChar.animationsArray[selectedAnimation-1] != null) {
 				ghostChar.visible = true;
 				ghostChar.playAnim(ghostChar.animationsArray[selectedAnimation-1].anim, true);
 				char.alpha = 0.85;

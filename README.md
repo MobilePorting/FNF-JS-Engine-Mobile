@@ -9,12 +9,6 @@
   <b>JS Engine is a heavily modified Psych Engine fork I made, with lower-end PCs and more customization in mind while also aiming to be a replacement for OS Engine.</b>
 </h3>
 
-**WARNING: SET HXCODEC TO 2.5.1 TO FIX CRASHES WITH EXTRA KEYS WITH LUA SCRIPTS**
-
-**MOBILE WARNING: SET HXCODEC TO GIT IF YOU WANT VIDEOS SUPPORT FOR IOS**
-
-# FEATURES IN JS ENGINE:
-This fork of psych engine 0.6.3 has lots of features, even more than OS ENGINE!
 README.md revamped by [Nael2xd](https://youtube.com/@nael2xd?si=axwJrY_8jdlXUwSm)
 
 ## Welcome

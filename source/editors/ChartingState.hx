@@ -1178,36 +1178,38 @@ class ChartingState extends MusicBeatState
 		});
 		var clearLeftSectionButton:FlxButton = new FlxButton(duetButton.x, duetButton.y + 30, "Clear Left Side", function()
 		{
-		saveUndo(_song); //this is really weird so im saving it as an undoable action just in case it does the wrong section
-		var removeThese = [];
-		for (noteIndex in 0..._song.notes[curSection].sectionNotes.length) {
-				if (_song.notes[curSection].sectionNotes[noteIndex][1] < 4) {
-					removeThese.push(_song.notes[curSection].sectionNotes[noteIndex]);
-				}
-		}
-		if (removeThese != []) {
-			for (x in removeThese) {
-				_song.notes[curSection].sectionNotes.remove(x);
+			if (_song.notes[curSection].sectionNotes == null) return;
+			saveUndo(_song); //this is really weird so im saving it as an undoable action just in case it does the wrong section
+			var removeThese = [];
+			for (noteIndex in 0..._song.notes[curSection].sectionNotes.length) {
+					if (_song.notes[curSection].sectionNotes[noteIndex][1] < 4) {
+						removeThese.push(_song.notes[curSection].sectionNotes[noteIndex]);
+					}
 			}
-		}
+			if (removeThese != []) {
+				for (x in removeThese) {
+					_song.notes[curSection].sectionNotes.remove(x);
+				}
+			}
 
 			updateGrid(false);
 			updateNoteUI();
 		});
 		var clearRightSectionButton:FlxButton = new FlxButton(clearLeftSectionButton.x + 100, clearLeftSectionButton.y, "Clear Right Side", function()
 		{
-		saveUndo(_song); //this is really weird so im saving it as an undoable action just in case it does the wrong section
-		var removeThese = [];
-		for (noteIndex in 0..._song.notes[curSection].sectionNotes.length) {
-				if (_song.notes[curSection].sectionNotes[noteIndex][1] >= 4) {
-					removeThese.push(_song.notes[curSection].sectionNotes[noteIndex]);
-				}
-		}
-		if (removeThese != []) {
-			for (x in removeThese) {
-				_song.notes[curSection].sectionNotes.remove(x);
+			if (_song.notes[curSection].sectionNotes == null) return;
+			saveUndo(_song); //this is really weird so im saving it as an undoable action just in case it does the wrong section
+			var removeThese = [];
+			for (noteIndex in 0..._song.notes[curSection].sectionNotes.length) {
+					if (_song.notes[curSection].sectionNotes[noteIndex][1] >= 4) {
+						removeThese.push(_song.notes[curSection].sectionNotes[noteIndex]);
+					}
 			}
-		}
+			if (removeThese != []) {
+				for (x in removeThese) {
+					_song.notes[curSection].sectionNotes.remove(x);
+				}
+			}
 
 			updateGrid(false);
 			updateNoteUI();
