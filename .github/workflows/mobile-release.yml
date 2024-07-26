@@ -103,8 +103,8 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
-          automatic_release_tag: "1.30.0"
-          title: "1.30.0"
+          automatic_release_tag: "1.30.2"
+          title: "1.30.2"
           files: |
             /home/runner/*.apk
             /home/runner/*.zip
