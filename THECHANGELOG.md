@@ -1,3 +1,7 @@
+1.30.1;
+
+Fixed making graphics returning a transparent white color.
+
 1.30.0;
 
 you can now split the vocals between both characters!
