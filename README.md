@@ -6,7 +6,7 @@
   <br>
 </h1>
 <h3 align="center">
-  <b>JS Engine Mobile is a heavily modified Psych Engine fork Jordan made, with lower-end PCs and more customization in mind while also aiming to be a replacement for OS Engine.</b>
+  <b>JS Engine is a heavily modified Psych Engine fork Jordan made, with lower-end PCs and more customization in mind while also aiming to be a replacement for OS Engine.</b>
 </h3>
 
 README.md revamped by [Nael2xd](https://youtube.com/@nael2xd?si=axwJrY_8jdlXUwSm)
