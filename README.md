@@ -1,21 +1,21 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/MobilePorting/JS-Engine-Mobile"><img src="assets/exclude/images/jslol.png" alt="JSengine" width="150"></a>
+  <a href="https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag"><img src="assets/exclude/images/jslol.png" alt="JSengine" width="150"></a>
   <br>
-  <b>JS Engine Mobile</b>
+  <b>JS Engine</b>
   <br>
 </h1>
 <h3 align="center">
-  <b>JS Engine is a heavily modified Psych Engine fork I made, with lower-end PCs and more customization in mind while also aiming to be a replacement for OS Engine.</b>
+  <b>JS Engine Mobile is a heavily modified Psych Engine fork Jordan made, with lower-end PCs and more customization in mind while also aiming to be a replacement for OS Engine.</b>
 </h3>
 
 README.md revamped by [Nael2xd](https://youtube.com/@nael2xd?si=axwJrY_8jdlXUwSm)
 
 ## Welcome
 
-Hello and welcome to JS Engine's github repo, where you can download the engine and make spammy charts or have fun with the engine.
+Hello and welcome to JS Engine Mobile's github repo, where you can download the engine and make spammy charts or have fun with the engine.
 
-This contains lots and lots of customizable and features built in to JS Engine, if you wanna see most of them listed, you can see it below this text
+This contains lots and lots of customizable and features built in to JS Engine Mobile, if you wanna see most of them listed, you can see it below this text
 
 # Features/Performances in JS ENGINE
 
@@ -31,7 +31,7 @@ The features/performances included are:
 - Rendering mode! (Originally used for lua and gamerenderer-engine)
 - Built in Song Credits! (on chart editor)
 
-There is like lots and lots of stuff i've missed, but at least you would like those features built in **JS ENGINE**
+There is like lots and lots of stuff Jordan have missed, but at least you would like those features built in **JS ENGINE**
 
 # Screenshots
 
@@ -54,6 +54,10 @@ A: Yes, you can! just be sure to credit me (@mcagabe19 on YouTube) and give a li
 Q: How do I (change the background, add characters, etc.)?
 
 A: You do it here the same way you'd do it in Psych Engine.
+
+# Compiling JS Engine
+
+Just look through [FunkinDroid COMPILING.md](https://github.com/FunkinDroidTeam/Funkin/blob/develop/docs/COMPILING.md) and for haxelibs install `hmm` and run `haxelib run hmm install` inside the repo.
 
 ## Customization:
 
