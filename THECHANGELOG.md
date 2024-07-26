@@ -1,3 +1,8 @@
+1.30.2;
+
+Fixed Roses Erect using the normal voices for the Opponent
+Fixed a weird offset with the Spirit idle
+
 1.30.1;
 
 Fixed making graphics returning a transparent white color.
