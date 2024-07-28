@@ -295,7 +295,7 @@ class MainMenuState extends MusicBeatState
 			{
 				if (optionShit[curSelected] == 'donate')
 				{
-					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag');
+					CoolUtil.browserLoad('https://github.com/JordanSantiagoYT/FNF-JS-Engine');
 				}
 				else
 				{

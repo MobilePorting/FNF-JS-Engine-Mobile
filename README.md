@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag"><img src="assets/exclude/images/jslol.png" alt="JSengine" width="150"></a>
+  <a href="https://github.com/JordanSantiagoYT/FNF-JS-Engine"><img src="assets/exclude/images/jslol.png" alt="JSengine" width="150"></a>
   <br>
   <b>JS Engine Mobile</b>
   <br>
@@ -27,7 +27,7 @@ The features/performances included are:
 - Loading songs longer than 20 minutes!
 - Note Performance!
 - Loading 100k+ notes without closing the window!
-- Basic Shader Support! (for a full list, it can be seen in [here](https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/wiki#q-what-are-all-the-basic-shaders-that-come-with-this-engine))
+- Basic Shader Support! (for a full list, it can be seen in [here](https://github.com/JordanSantiagoYT/FNF-JS-Engine/wiki#q-what-are-all-the-basic-shaders-that-come-with-this-engine))
 - Rendering mode! (Originally used for lua and gamerenderer-engine)
 - Built in Song Credits! (on chart editor)
 
@@ -37,19 +37,19 @@ There is like lots and lots of stuff Jordan have missed, but at least you would 
 
 Here are some screenshots of what the engine looks like. 
 
-![Screenshot 2024-07-07 14-00-00](https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/assets/108278470/d4e89995-fa14-40bf-a5d6-d1647548fd93)
+![Screenshot 2024-07-07 14-00-00](https://github.com/JordanSantiagoYT/FNF-JS-Engine/assets/108278470/d4e89995-fa14-40bf-a5d6-d1647548fd93)
 
-![Screenshot 2024-07-07 14-01-15](https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/assets/108278470/b6d7d5ef-196d-4c39-9055-97815d63cdf0)
+![Screenshot 2024-07-07 14-01-15](https://github.com/JordanSantiagoYT/FNF-JS-Engine/assets/108278470/b6d7d5ef-196d-4c39-9055-97815d63cdf0)
 
-![Screenshot 2024-07-07 13-58-45](https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/assets/108278470/a65ea8b5-8b0d-4643-b7e0-cddd3972422b)
+![Screenshot 2024-07-07 13-58-45](https://github.com/JordanSantiagoYT/FNF-JS-Engine/assets/108278470/a65ea8b5-8b0d-4643-b7e0-cddd3972422b)
 
 # FAQs
 
-Frequently Asked Questions (FAQs) are found in [here](https://github.com/JordanSantiagoYT/FNF-PsychEngine-NoBotplayLag/wiki) or you can simply see it below.
+Frequently Asked Questions (FAQs) are found in [here](https://github.com/JordanSantiagoYT/FNF-JS-Engine/wiki) or you can simply see it below.
 
 Q: Can I use this port for my mod(s)?
 
-A: Yes, you can! just be sure to credit me (@mcagabe19 on YouTube) and give a link to this page. or [the link to download the latest release.](https://github.com/MobilePorting/JS-Engine-Mobile/releases/latest)
+A: Yes, you can! just be sure to credit me (@mcagabe19 on YouTube) and give a link to this page. or [the link to download the latest release.](https://github.com/MobilePorting/FNF-JS-Engine-Mobile/releases/latest)
 
 Q: How do I (change the background, add characters, etc.)?
 
