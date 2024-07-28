@@ -13,9 +13,9 @@ README.md revamped by [Nael2xd](https://youtube.com/@nael2xd?si=axwJrY_8jdlXUwSm
 
 ## Welcome
 
-Hello and welcome to JS Engine Mobile's github repo, where you can download the port and make spammy charts or have fun with the engine.
+Hello and welcome to JS Engine Mobile's github repo, where you can download the port and play spammy charts or have fun with the engine.
 
-This contains lots and lots of customizable and features built in to JS Engine Mobile, if you wanna see most of them listed, you can see it below this text
+This contains lots and lots of customizable and features built in to JS Engine, if you wanna see most of them listed, you can see it below this text
 
 # Features/Performances in JS ENGINE
 
