@@ -19,7 +19,7 @@ class MobileOptionsSubState extends BaseOptionsMenu
 
 	public function new()
 	{
-		#if android if (externalPaths != null && externalPaths.length > 0 || externalPaths[0] != '') storageTypes = storageTypes.concat(externalPaths); #end
+		#if android if (!externalPaths.contains('\n')) storageTypes = storageTypes.concat(externalPaths); #end
 		title = 'Mobile Options';
 		rpcTitle = 'Mobile Options Menu'; // for Discord Rich Presence, fuck it
 
