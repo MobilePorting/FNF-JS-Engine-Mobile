@@ -73,7 +73,7 @@
       "type": "git",
       "dir": null,
       "ref": "main",
-      "url": "https://github.com/PsychPorting/linc_luajit-0.6.3"
+      "url": "https://github.com/mcagabe19-stuff/linc_luajit-legacy"
     },
     {
       "name": "extension-androidtools",
