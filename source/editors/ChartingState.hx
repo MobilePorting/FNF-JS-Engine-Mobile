@@ -297,7 +297,7 @@ class ChartingState extends MusicBeatState
 		hitsound = FlxG.sound.load(Paths.sound("hitsounds/" + 'osu!mania'));
 		hitsound.volume = 1;
 
-		Paths.initDefaultSkin(4, _song.arrowSkin, true);
+		Paths.initDefaultSkin(_song.arrowSkin, true);
 
 		#if desktop
 		// Updating Discord Rich Presence
@@ -405,7 +405,6 @@ class ChartingState extends MusicBeatState
 		if(curSec >= _song.notes.length) curSec = _song.notes.length - 1;
 
 		FlxG.mouse.visible = true;
-		//FlxG.save.bind('funkin', CoolUtil.getSavePath());
 
 		tempBpm = _song.bpm;
 
@@ -823,7 +822,7 @@ class ChartingState extends MusicBeatState
 		var reloadNotesButton:FlxButton = new FlxButton(noteSplashesInputText.x + 5, noteSplashesInputText.y + 20, 'Change Notes', function() {
 			_song.arrowSkin = noteSkinInputText.text;
 			selectionNote.texture = noteSkinInputText.text;
-			Paths.initDefaultSkin(4, noteSkinInputText.text, true);
+			Paths.initDefaultSkin(noteSkinInputText.text, true);
 			updateGrid();
 		});
 
@@ -1532,7 +1531,7 @@ class ChartingState extends MusicBeatState
 		halfSpamNum.color = FlxColor.RED;
 		halfSpamNum.label.color = FlxColor.WHITE;
 
-		stepperStackOffset = new FlxUINumericStepper(10, 80, 1, 1, 0, 8192, 4);
+		stepperStackOffset = new FlxUINumericStepper(10, 80, 1, 1, 0, 999999, 4);
 		stepperStackOffset.name = 'stack_offset';
 		blockPressWhileTypingOnStepper.push(stepperStackOffset);
 
