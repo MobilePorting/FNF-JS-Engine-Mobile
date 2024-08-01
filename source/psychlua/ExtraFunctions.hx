@@ -14,9 +14,36 @@ class ExtraFunctions
 		var lua:State = funk.lua;
 		
 		// Keyboard & Gamepads
-		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String) return Reflect.getProperty(FlxG.keys.justPressed, name));
-		Lua_helper.add_callback(lua, "keyboardPressed", function(name:String) return Reflect.getProperty(FlxG.keys.pressed, name));
-		Lua_helper.add_callback(lua, "keyboardReleased", function(name:String) return Reflect.getProperty(FlxG.keys.justReleased, name));
+		Lua_helper.add_callback(lua, "keyboardJustPressed", function(name:String)
+			{
+				final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
+				return switch (name.toUpperCase()) {
+				case "SPACE":
+					ClientPrefs.mobileCEx ? mobileC.justPressed : false || Reflect.getProperty(FlxG.keys.justPressed, "SPACE");
+				default:
+					Reflect.getProperty(FlxG.keys.justPressed, name);
+				}
+			});
+			Lua_helper.add_callback(lua, "keyboardPressed", function(name:String)
+			{
+				final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
+				return switch (name.toUpperCase()) {
+				case "SPACE":
+					ClientPrefs.mobileCEx ? mobileC.pressed : false || Reflect.getProperty(FlxG.keys.pressed, "SPACE");
+				default:
+					Reflect.getProperty(FlxG.keys.pressed, name);
+				}
+			});
+			Lua_helper.add_callback(lua, "keyboardReleased", function(name:String)
+			{
+				final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
+				return switch (name.toUpperCase()) {
+				case "SPACE":
+					ClientPrefs.mobileCEx ? mobileC.justReleased : false || Reflect.getProperty(FlxG.keys.justReleased, "SPACE");
+				default:
+					Reflect.getProperty(FlxG.keys.justReleased, name);
+				}
+			});	
 
 		Lua_helper.add_callback(lua, "anyGamepadJustPressed", function(name:String) return FlxG.gamepads.anyJustPressed(name));
 		Lua_helper.add_callback(lua, "anyGamepadPressed", function(name:String) FlxG.gamepads.anyPressed(name));
@@ -60,6 +87,7 @@ class ExtraFunctions
 
 		Lua_helper.add_callback(lua, "keyJustPressed", function(name:String) {
 			var key:Bool = false;
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_P');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_P');
@@ -69,29 +97,31 @@ class ExtraFunctions
 				case 'back': key = PlayState.instance.getControl('BACK');
 				case 'pause': key = PlayState.instance.getControl('PAUSE');
 				case 'reset': key = PlayState.instance.getControl('RESET');
-				case 'space': key = FlxG.keys.justPressed.SPACE; //an extra key for convinience
+				case 'space': key = ClientPrefs.mobileCEx ? mobileC.justPressed : false || FlxG.keys.justPressed.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
 		Lua_helper.add_callback(lua, "keyPressed", function(name:String) {
 			var key:Bool = false;
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT');
-				case 'space': key = FlxG.keys.pressed.SPACE; //an extra key for convinience
+				case 'space': key = ClientPrefs.mobileCEx ? mobileC.pressed : false || FlxG.keys.pressed.SPACE;//an extra key for convinience
 			}
 			return key;
 		});
 		Lua_helper.add_callback(lua, "keyReleased", function(name:String) {
 			var key:Bool = false;
+			final mobileC:mobile.flixel.FlxButton = @:privateAccess {(mobile.MobileControls.mode == "Hitbox") ? PlayState.instance.mobileControls.hitbox.hints[4] : PlayState.instance.mobileControls.virtualPad.buttonEx;}
 			switch(name) {
 				case 'left': key = PlayState.instance.getControl('NOTE_LEFT_R');
 				case 'down': key = PlayState.instance.getControl('NOTE_DOWN_R');
 				case 'up': key = PlayState.instance.getControl('NOTE_UP_R');
 				case 'right': key = PlayState.instance.getControl('NOTE_RIGHT_R');
-				case 'space': key = FlxG.keys.justReleased.SPACE; //an extra key for convinience
+				key = ClientPrefs.mobileCEx ? mobileC.justReleased : false || FlxG.keys.justReleased.SPACE;//an extra key for convinience
 			}
 			return key;
 		});

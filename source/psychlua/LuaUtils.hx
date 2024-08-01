@@ -321,6 +321,8 @@ class LuaUtils
 		return 'browser';
 		#elseif android
 		return 'android';
+		#elseif ios
+		return 'ios';
 		#elseif switch
 		return 'switch';
 		#else
