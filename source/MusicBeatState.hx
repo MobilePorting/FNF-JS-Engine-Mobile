@@ -265,9 +265,7 @@ class MusicBeatState extends FlxUIState
 		if (!FlxTransitionableState.skipNextTransIn)
 		{
 			openSubState(new CustomFadeTransition(0.6, false));
-
 			CustomFadeTransition.finishCallback = onOutroComplete;
-
 			return;
 		}
 

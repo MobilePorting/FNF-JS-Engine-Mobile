@@ -3,8 +3,6 @@ package;
 import flixel.graphics.frames.FlxAtlasFrames;
 import flixel.graphics.frames.FlxFramesCollection;
 import flixel.graphics.FlxGraphic;
-import flixel.FlxG;
-import flixel.FlxSprite;
 import flixel.animation.FlxAnimationController;
 import openfl.display.BitmapData;
 import openfl.display3D.textures.RectangleTexture;
@@ -46,9 +44,6 @@ class Paths
 	inline public static var VIDEO_EXT = "mp4";
 
 	public static var defaultNoteSprite:FlxSprite;
-
-	private static var noteFrames:FlxFramesCollection;
-	private static var noteAnimation:FlxAnimationController;
 
 	public static var noteSkinFramesMap:Map<String, FlxFramesCollection> = new Map();
 	public static var noteSkinAnimsMap:Map<String, FlxAnimationController> = new Map();
@@ -769,20 +764,6 @@ class Paths
 		return modFolders('images/' + key + '.txt');
 	}
 
-	/* Goes unused for now
-
-	inline static public function modsShaderFragment(key:String, ?library:String)
-	{
-		return modFolders('shaders/'+key+'.frag');
-	}
-	inline static public function modsShaderVertex(key:String, ?library:String)
-	{
-		return modFolders('shaders/'+key+'.vert');
-	}
-	inline static public function modsAchievements(key:String) {
-		return modFolders('achievements/' + key + '.json');
-	}*/
-
 	static public function modFolders(key:String) {
 		if(currentModDirectory != null && currentModDirectory.length > 0) {
 			var fileToCheck:String = mods(currentModDirectory + '/' + key);
@@ -915,23 +896,7 @@ class Paths
 				animationJson = getTextFromFile('images/$originalPath/Animation.json');
 			}
 		}
-
-		//trace(folderOrImg);
-		//trace(spriteJson);
-		//trace(animationJson);
 		spr.loadAtlasEx(folderOrImg, spriteJson, animationJson);
 	}
-
-	/*private static function getContentFromFile(path:String):String
-	{
-		var onAssets:Bool = false;
-		var path:String = Paths.getPath(path, TEXT, true);
-		if(FileSystem.exists(path) || (onAssets = true && Assets.exists(path, TEXT)))
-		{
-			//trace('Found text: $path');
-			return !onAssets ? File.getContent(path) : Assets.getText(path);
-		}
-		return null;
-	}*/
 	#end
 }

@@ -1,9 +1,5 @@
 package;
 
-import openfl.display.Tile;
-#if desktop
-import DiscordClient;
-#end
 import editors.ChartingState;
 import flixel.FlxG;
 import flixel.FlxSprite;

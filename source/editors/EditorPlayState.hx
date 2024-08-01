@@ -19,7 +19,6 @@ import flixel.util.FlxSort;
 import flixel.util.FlxTimer;
 import flixel.input.keyboard.FlxKey;
 import openfl.events.KeyboardEvent;
-import FunkinLua;
 import Note.PreloadedChartNote;
 
 import Character.CharacterFile;

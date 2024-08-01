@@ -51,7 +51,7 @@ class FPSCounter extends TextField
 
 		final now:Float = haxe.Timer.stamp() * 1000;
 		times.push(now);
-		while (times[0] < now - 1000) times.shift();
+		while (times[0] < now - 1000 / fpsMultiplier) times.shift();
 
 		if (Std.isOfType(FlxG.state, PlayState) && !PlayState.instance.trollingMode) { 
 			try { fpsMultiplier = PlayState.instance.playbackRate; }

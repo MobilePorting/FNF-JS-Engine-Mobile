@@ -1,3 +1,5 @@
+package;
+
 class EtternaFunctions
 {
     // erf constants
@@ -21,43 +23,6 @@ class EtternaFunctions
         var y = 1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*Math.exp(-x*x);
     
         return sign*y;
-    }
-
-    public static function getNotes():Int
-    {
-        var notes:Int = 0;
-        for (i in 0...PlayState.SONG.notes.length) 
-        {
-            for (ii in 0...PlayState.SONG.notes[i].sectionNotes.length)
-            {
-                var n = PlayState.SONG.notes[i].sectionNotes[ii];
-                if (n[1] <= 0)
-                    notes++;
-            }
-        }
-        return notes;
-    }
-
-    public static function getHolds():Int
-        {
-            var notes:Int = 0;
-            for (i in 0...PlayState.SONG.notes.length) 
-            {
-                trace(PlayState.SONG.notes[i]);
-                for (ii in 0...PlayState.SONG.notes[i].sectionNotes.length)
-                {
-                    var n = PlayState.SONG.notes[i].sectionNotes[ii];
-                    trace(n);
-                    if (n[1] > 0)
-                        notes++;
-                }
-            }
-            return notes;
-        }
-
-    public static function getMapMaxScore():Int
-    {
-        return (getNotes() * 350); //its 350 instead of 500 so that its fair even if you turn off marvelous judgements
     }
 
     public static function wife3(maxms:Float, ts:Float)

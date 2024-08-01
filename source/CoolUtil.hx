@@ -136,7 +136,7 @@ class CoolUtil
 		File.saveContent(haxe.io.Path.join([exeDir, "update.bat"]), theBatch);
 
 		// Execute the batch file
-				new Process(exeDir + "/update.bat", []);
+		new Process(exeDir + "/update.bat", []);
 		Sys.exit(0);
 	}
 
@@ -461,33 +461,30 @@ class CoolUtil
 		return Math.max(min, Math.min(max, value));
 	}
 
-	public static function coolTextFile(path:String):Array<String>
+	inline public static function coolTextFile(path:String):Array<String>
 	{
-		var daList:Array<String> = [];
-		#if sys
-		if(FileSystem.exists(path)) daList = File.getContent(path).trim().split('\n');
+		var daList:String = null;
+		#if (sys && MODS_ALLOWED)
+		if(FileSystem.exists(path)) daList = File.getContent(path);
 		#else
-		if(Assets.exists(path)) daList = Assets.getText(path).trim().split('\n');
+		if(Assets.exists(path)) daList = Assets.getText(path);
 		#end
-
-		for (i in 0...daList.length)
-		{
-			daList[i] = daList[i].trim();
-		}
-
-		return daList;
+		return daList != null ? listFromString(daList) : [];
 	}
-	public static function listFromString(string:String):Array<String>
+
+	inline public static function colorFromString(color:String):FlxColor
 	{
-		var daList:Array<String> = [];
-		daList = string.trim().split('\n');
+		var hideChars:EReg = ~/[\t\n\r]/;
+		var color:String = hideChars.split(color).join('').trim();
+		if(color.startsWith('0x')) color = color.substring(color.length - 6);
 
-		for (i in 0...daList.length)
-		{
-			daList[i] = daList[i].trim();
-		}
-
-		return daList;
+		var colorNum:Null<FlxColor> = FlxColor.fromString(color);
+		if(colorNum == null) colorNum = FlxColor.fromString('#$color');
+		return colorNum != null ? colorNum : FlxColor.WHITE;
+	}
+	inline public static function listFromString(string:String):Array<String> {
+		final daList:Array<String> = string.trim().split('\n');
+		return [for(i in 0...daList.length) daList[i].trim()];
 	}
 	public static function dominantColor(sprite:flixel.FlxSprite):Int{
 		var countByColor:Map<Int, Int> = [];
@@ -594,7 +591,21 @@ class CoolUtil
 		return '$company/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
 	}
 
-	public static inline function last<T>(array:Array<T>):T {
+	public static inline function last<T>(array:Array<T>):T
 		return array[array.length - 1];
+
+	public static function setTextBorderFromString(text:FlxText, border:String)
+	{
+		switch(border.toLowerCase().trim())
+		{
+			case 'shadow':
+				text.borderStyle = SHADOW;
+			case 'outline':
+				text.borderStyle = OUTLINE;
+			case 'outline_fast', 'outlinefast':
+				text.borderStyle = OUTLINE_FAST;
+			default:
+				text.borderStyle = NONE;
+		}
 	}
 }

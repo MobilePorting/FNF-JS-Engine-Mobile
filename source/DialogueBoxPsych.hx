@@ -39,8 +39,6 @@ typedef DialogueAnimArray = {
 	var idle_offsets:Array<Int>;
 }
 
-// Gonna try to kind of make it compatible to Forever Engine,
-// love u Shubs no homo :flushedh4:
 typedef DialogueFile = {
 	var dialogue:Array<DialogueLine>;
 }
@@ -75,6 +73,10 @@ class DialogueCharacter extends FlxSprite
 	public function new(x:Float = 0, y:Float = 0, character:String = null)
 	{
 		super(x, y);
+
+		//precache sounds
+		Paths.sound('dialogue');
+		Paths.sound('dialogueClose');
 
 		if(character == null) character = DEFAULT_CHARACTER;
 		this.curCharacter = character;

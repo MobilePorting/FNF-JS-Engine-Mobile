@@ -1,17 +1,11 @@
 package;
 
-import flixel.math.FlxMath;
-import flixel.FlxSprite;
-import openfl.utils.Assets as OpenFlAssets;
-import flixel.FlxG;
-
 using StringTools;
 
 class HealthIcon extends FlxSprite
 {
 	public var sprTracker:FlxSprite;
 	public var canBounce:Bool = false;
-	private var isOldIcon:Bool = false;
 	private var isPlayer:Bool = false;
 	private var char:String = '';
 
@@ -21,7 +15,6 @@ class HealthIcon extends FlxSprite
 	public function new(char:String = 'bf', isPlayer:Bool = false, ?allowGPU:Bool = true)
 	{
 		super();
-		isOldIcon = (char == 'bf-old');
 		this.isPlayer = isPlayer;
 		changeIcon(char);
 		scrollFactor.set();
@@ -39,11 +32,6 @@ class HealthIcon extends FlxSprite
 			scale.set(mult, mult);
 			updateHitbox();
 		}
-	}
-
-	public function swapOldIcon() {
-		if(isOldIcon = !isOldIcon) changeIcon('bf-old');
-		else changeIcon('bf');
 	}
 
 	public var iconOffsets:Array<Float> = [0, 0];

@@ -32,16 +32,15 @@ class PauseSubState extends MusicBeatSubstate
 	var skipTimeText:FlxText;
 	var skipTimeTracker:Alphabet;
 	var curTime:Float = Math.max(0, Conductor.songPosition);
-	//var botplayText:FlxText;
+
 	public static var botplayLockout:Bool = false;
 	public static var inPause:Bool = false;
 	public static var requireRestart:Bool = false;
 
 	public static var songName:String = '';
 
-	public function new(x:Float, y:Float)
+	override function create()
 	{
-		super();
 		if(CoolUtil.difficulties.length < 2) menuItemsOG.remove('Change Difficulty'); //No need to change difficulty if there is only one!
 
 		if(botplayLockout) menuItemsOG.remove('Toggle Botplay'); //you cant toggle it on MWAHAHAHAHAHA
@@ -144,6 +143,8 @@ class PauseSubState extends MusicBeatSubstate
 
 		addVirtualPad(PlayState.chartingMode ? LEFT_FULL : UP_DOWN, A);
 		addVirtualPadCamera();
+
+		super.create();
 	}
 
 	var holdTime:Float = 0;
@@ -332,7 +333,6 @@ class PauseSubState extends MusicBeatSubstate
 					} else if (!PlayState.isStoryMode) {
 						FlxG.switchState(FreeplayState.new);
 					}
-					PlayState.cancelMusicFadeTween();
 					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
@@ -342,7 +342,6 @@ class PauseSubState extends MusicBeatSubstate
 
 					WeekData.loadTheFirstEnabledMod();
 						FlxG.switchState(MainMenuState.new);
-					PlayState.cancelMusicFadeTween();
 					FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.daMenuMusic));
 					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;

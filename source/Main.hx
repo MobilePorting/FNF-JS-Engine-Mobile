@@ -2,14 +2,9 @@ package;
 
 import flixel.FlxGame;
 import openfl.Lib;
+import openfl.display.Sprite;
 import debug.FPSCounter;
 import lime.app.Application;
-import backend.SSPlugin as ScreenShotPlugin;
-#if desktop
-import DiscordClient;
-#end
-import haxe.io.Input;
-import haxe.io.BytesBuffer;
 import backend.SSPlugin as ScreenShotPlugin;
 #if mobile
 import mobile.CopyState;
@@ -27,7 +22,7 @@ using StringTools;
 	#define GAMEMODE_AUTO
 ')
 #end
-class Main extends openfl.display.Sprite {
+class Main extends Sprite {
 	var game = {
 		width: 1280,
 		height: 720,
@@ -124,10 +119,6 @@ class Main extends openfl.display.Sprite {
 		DisableProcessWindowsGhosting()
 		')
 		#end
-		// Credits to MAJigsaw77 (he's the og author for this code)
-		#if ios
-		Sys.setCwd(lime.system.System.applicationStorageDirectory);
-		#end
 		setupGame();
 	}
 
@@ -142,10 +133,10 @@ class Main extends openfl.display.Sprite {
 			game.zoom = Math.min(ratioX, ratioY);
 			game.width = Math.ceil(stageWidth / game.zoom);
 			game.height = Math.ceil(stageHeight / game.zoom);
-			game.skipSplash = true; // if the default flixel splash screen should be skipped
 		};
 		#end
 
+		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		ClientPrefs.loadDefaultKeys();
 
 		addChild(new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) !CopyState.checkExistingFiles() ? CopyState : #end game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
@@ -183,6 +174,25 @@ class Main extends openfl.display.Sprite {
 		});
 
 		#if DISCORD_ALLOWED DiscordClient.prepare(); #end
+
+		// shader coords fix
+		FlxG.signals.gameResized.add(function(w, h) {
+			if (FlxG.cameras != null) {
+			  	for (cam in FlxG.cameras.list) {
+			   		if (cam != null && cam.filters != null)
+				   		resetSpriteCache(cam.flashSprite);
+			  	}
+		   	}
+
+		   if (FlxG.game != null) resetSpriteCache(FlxG.game);
+	   });
+	}
+
+	static function resetSpriteCache(sprite:Sprite):Void {
+		@:privateAccess {
+		    sprite.__cacheBitmap = null;
+			sprite.__cacheBitmapData = null;
+		}
 	}
 
 	public static function changeFPSColor(color:FlxColor) {
