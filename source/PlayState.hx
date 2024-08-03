@@ -150,8 +150,6 @@ class PlayState extends MusicBeatState
 	public static var iconOffset:Int = 26;
 
 	var tankmanAscend:Bool = false; // funni (2021 nostalgia oh my god)
-	public var isEkSong:Bool = false; //we'll use this so that the game doesn't load all notes twice?
-	public var usingEkFile:Bool = false; //we'll also use this so that the game doesn't load all notes twice?
 
 	public var notes:NoteGroup;
 	public var sustainNotes:NoteGroup;
@@ -816,18 +814,21 @@ class PlayState extends MusicBeatState
 
 		// "GLOBAL" SCRIPTS
 		#if LUA_ALLOWED
-		for (folder in Paths.directoriesWithFile(Paths.getPreloadPath(), 'scripts/'))
+		var foldersToCheck:Array<String> = [Paths.getPreloadPath('scripts/')];
+		for (folder in Paths.directoriesWithFile('scripts/', ''))
+			if (FileSystem.exists(folder)) 
+				foldersToCheck.insert(0, folder);
+
+		for (folder in foldersToCheck)
+		{
+			if (!FileSystem.exists(folder)) continue;
 			for (file in FileSystem.readDirectory(folder)) {
 				if(file.toLowerCase().endsWith('.lua'))
 				{
 					new FunkinLua(folder + file);
-					if (Std.string(file) == 'extra keys hscript.lua')
-					{
-						trace ('theres a lua extra keys file');
-						usingEkFile = true;
-					}
 				}
 			}
+		}
 		#end
 
 		//CUSTOM ACHIVEMENTS
@@ -3045,10 +3046,6 @@ class PlayState extends MusicBeatState
 			if (section.changeBPM) currentBPMLol = section.bpm;
 
 			for (songNotes in section.sectionNotes) {
-				if (usingEkFile && (songNotes[1] > 3) && !isEkSong) {
-					trace("one of the notes' note data exceeded the normal note count and there's a lua ek file, so im assuming this song is an ek song");
-					isEkSong = true;
-				}
 				if (songNotes[0] >= startingPoint - 350) {
 					final daStrumTime:Float = songNotes[0];
 					var daNoteData:Int = 0;
