@@ -23,7 +23,7 @@ using StringTools;
 ')
 #end
 class Main extends Sprite {
-	var game = {
+	final game = {
 		width: 1280,
 		height: 720,
 		initialState: StartupState.new,
@@ -35,9 +35,9 @@ class Main extends Sprite {
 
 	public static var fpsVar:FPSCounter;
 
-	public static var superDangerMode:Bool = Sys.args().contains("-troll");
+	public static final superDangerMode:Bool = Sys.args().contains("-troll");
 
-    public static var __superCoolErrorMessagesArray:Array<String> = [
+    public static final __superCoolErrorMessagesArray:Array<String> = [
         "A fatal error has occ- wait what?",
         "missigno.",
         "oopsie daisies!! you did a fucky wucky!!",
@@ -136,7 +136,7 @@ class Main extends Sprite {
 		};
 		#end
 
-		#if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
+		// #if LUA_ALLOWED Lua.set_callbacks_function(cpp.Callable.fromStaticFunction(psychlua.CallbackHandler.call)); #end
 		ClientPrefs.loadDefaultKeys();
 
 		addChild(new FlxGame(game.width, game.height, #if (mobile && MODS_ALLOWED) !CopyState.checkExistingFiles() ? CopyState : #end game.initialState, #if (flixel < "5.0.0") game.zoom, #end game.framerate, game.framerate, game.skipSplash, game.startFullscreen));
