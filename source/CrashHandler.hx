@@ -13,7 +13,7 @@ using flixel.util.FlxArrayUtil;
 
 /**
  * Crash Handler.
- * @author YoshiCrafter29, Ne_Eo and MAJigsaw77
+ * @author YoshiCrafter29, Ne_Eo, MAJigsaw77 and mcagabe19
  */
 
 class CrashHandler
