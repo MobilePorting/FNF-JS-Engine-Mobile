@@ -524,7 +524,7 @@ class CoolUtil
 	**/
 	public static function coolError(message:Null<String> = null, title:Null<String> = null):Void {
 		#if !linux
-		this.showPopUp(message, title);
+		showPopUp(message, title);
 		#else
 		trace(title + " - " + message, ERROR);
 
