@@ -9,7 +9,7 @@ import sys.io.File;
 #end
 
 using StringTools;
-using CoolUtil;
+using flixel.util.FlxArrayUtil;
 
 /**
  * Crash Handler.
