@@ -1,10 +1,14 @@
 /*
-	The functions "maybe" needs to be added: isScreenKeyboardShown, messageboxShowMessageBox, clipboardHasText, clipboardGetText, clipboardSetText
+	The functions "maybe" needs to be added: messageboxShowMessageBox
 	NOTE: THESE AT "SDLActivity"!!
  */
 
 package android;
 
+/**
+ * ...
+ * @author Lily Ross (mcagabe19)
+ */
 #if android
 import lime.system.JNI;
 
@@ -31,9 +35,35 @@ class PsychJNI #if (lime >= "8.0.0") implements JNISafety #end
 		}
 	}
 
+	public static inline function isScreenKeyboardShown():Dynamic
+		return isScreenKeyboardShown_jni();
+
+	public static inline function clipboardHasText():Dynamic
+		return clipboardHasText_jni();
+
+	public static inline function clipboardGetText():Dynamic
+		return clipboardGetText_jni();
+
+	public static inline function clipboardSetText(string:String):Dynamic
+		return clipboardSetText_jni(string);
+
+	public static inline function manualBackButton():Dynamic
+		return manualBackButton_jni();
+
+	public static inline function setActivityTitle(title:String):Dynamic
+		return setActivityTitle_jni(title);
+
 	@:noCompletion private static var setOrientation_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'setOrientation',
 		'(IIZLjava/lang/String;)V');
-
 	@:noCompletion private static var getCurrentOrientation_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'getCurrentOrientation', '()I');
+	@:noCompletion private static var isScreenKeyboardShown_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'isScreenKeyboardShown', '()Z');
+	@:noCompletion private static var clipboardHasText_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'clipboardHasText', '()Z');
+	@:noCompletion private static var clipboardGetText_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'clipboardGetText',
+		'()Ljava/lang/String;');
+	@:noCompletion private static var clipboardSetText_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'clipboardSetText',
+		'(Ljava/lang/String;)V');
+	@:noCompletion private static var manualBackButton_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'manualBackButton', '()V');
+	@:noCompletion private static var setActivityTitle_jni:Dynamic = JNI.createStaticMethod('org/libsdl/app/SDLActivity', 'setActivityTitle',
+		'(Ljava/lang/String;)Z');
 }
 #end
