@@ -3907,7 +3907,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				pauseVocals();
 
-				SUtil.showPopUp(message, title);
+				CoolUtil.showPopUp(message, title);
 				FlxG.sound.music.resume();
 				unpauseVocals();
 					botplayUsed = true;
@@ -3923,7 +3923,7 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				pauseVocals();
 
-				SUtil.showPopUp(message, title);
+				CoolUtil.showPopUp(message, title);
 				unpauseVocals();
 					botplayUsed = true;
 					new FlxTimer().start(180, function(tmr:FlxTimer)
@@ -4858,14 +4858,14 @@ class PlayState extends MusicBeatState
 				FlxG.sound.music.pause();
 				pauseVocals();
 
-				SUtil.showPopUp(message, title);
+				CoolUtil.showPopUp(message, title);
 				FlxG.sound.music.resume();
 				unpauseVocals();
 			case 'Popup (No Pause)':
 				var title:String = (value1);
 				var message:String = (value2);
 
-				SUtil.showPopUp(message, title);
+				CoolUtil.showPopUp(message, title);
 
 			case 'Change Scroll Speed':
 				if (songSpeedType == "constant")
