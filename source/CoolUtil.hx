@@ -591,9 +591,6 @@ class CoolUtil
 		return '$company/${flixel.util.FlxSave.validate(FlxG.stage.application.meta.get('file'))}';
 	}
 
-	public static inline function last<T>(array:Array<T>):T
-		return array[array.length - 1];
-
 	public static function setTextBorderFromString(text:FlxText, border:String)
 	{
 		switch(border.toLowerCase().trim())
