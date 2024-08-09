@@ -53,12 +53,12 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		if (goption.getValue() != "constant")
 		{
 			option.displayFormat = '%vX';
-			option.maxValue = 100;
+			option.maxValue = 128;
 		}
 		else
 		{
 			option.displayFormat = "%v";
-			option.maxValue = 200;
+			option.maxValue = 1024;
 		}
 		optionsArray.push(option);
 
@@ -66,7 +66,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		var option:GameplayOption = new GameplayOption('Playback Rate', 'songspeed', 'float', 1);
 		option.scrollSpeed = 3;
 		option.minValue = 0.01;
-		option.maxValue = 30;
+		option.maxValue = 100;
 		option.changeValue = 0.05;
 		option.slowChangeVal = 0.01;
 		option.displayFormat = '%vX';
@@ -148,7 +148,7 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 		option.onChange = onChangeChartOption;
 		optionsArray.push(option);
 
-		var option:GameplayOption = new GameplayOption('Jack Amount: ', 'jacks', 'float', 0);
+		var option:GameplayOption = new GameplayOption('Jack Amount: ', 'jacks', 'int', 0);
 		option.onChange = onChangeChartOption;
 		option.scrollSpeed = 6;
 		option.minValue = 0;
@@ -353,24 +353,23 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 											if (curOption.getValue() == "constant")
 											{
 												oOption.displayFormat = "%v";
-												oOption.maxValue = 60;
+												oOption.maxValue = 1024;
 											}
 											else
 											{
 												oOption.displayFormat = "%vX";
-												oOption.maxValue = 30;
-												if(oOption.getValue() > 30) oOption.setValue(30);
+												oOption.maxValue = 128;
+												if(oOption.getValue() > 128) oOption.setValue(128);
 											}
 											updateTextFrom(oOption);
 										}
 									}
-									//trace(curOption.options[num]);
 							}
 							updateTextFrom(curOption);
 							curOption.change();
 							FlxG.sound.play(Paths.sound('scrollMenu'));
 						} else if(curOption.type != 'string') {
-							holdValue += curOption.scrollSpeed * elapsed * (controls.UI_LEFT ? -1 : 1);
+							holdValue += curOption.scrollSpeed * elapsed * curOption.getValue() * (controls.UI_LEFT ? -1 : 1);
 							if (holdValue < curOption.minValue) holdValue = curOption.minValue;
 							if (holdValue > curOption.maxValue) holdValue = curOption.maxValue;
 							
@@ -441,10 +440,10 @@ class GameplayChangersSubstate extends MusicBeatSubstate
 				if(leOption.name == 'Scroll Speed')
 				{
 					leOption.displayFormat = "%vX";
-					leOption.maxValue = 60;
-					if(leOption.getValue() > 60)
+					leOption.maxValue = 128;
+					if(leOption.getValue() > 128)
 					{
-						leOption.setValue(60);
+						leOption.setValue(128);
 					}
 					updateTextFrom(leOption);
 				}
